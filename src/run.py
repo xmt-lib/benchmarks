@@ -15,7 +15,7 @@ if not os.path.exists('result.csv'):
 
 timeout = 300  # seconds
 GB = 1024 * 1024 * 1024
-MEMORY_LIMIT = 8 * GB
+MEMORY_LIMIT = 10 * GB
 
 def limit_memory():
     resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))

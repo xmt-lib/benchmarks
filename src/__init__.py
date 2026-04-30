@@ -1,9 +1,9 @@
-# import src.CommonItems
-# import src.CompleteSets
-# import src.GraphColoring
+import src.CommonItems
+import src.CompleteSets
+import src.GraphColoring
 import src.N_queens
-# import src.NonPartitionRemovalColoring
-# import src.PackingProblem
-# import src.PPM
-# import src.QuasiGroup
-# import src.TGCheckSat
+import src.NonPartitionRemovalColoring
+import src.PackingProblem
+import src.PPM
+import src.QuasiGroup
+import src.TGCheckSat

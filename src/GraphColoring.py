@@ -29,7 +29,7 @@ Generator: https://github.com/xmt-lib/benchmarks
 Application: industrial configuration problem
 Target solver: Z3
 Publications: https://arxiv.org/abs/2602.19102
-Time limit: 600
+Time limit: 300
 From the DIRT benchmark used to evaluate grounders
 |)
 (set-info :license "https://creativecommons.org/licenses/by/4.0/")
@@ -37,10 +37,9 @@ From the DIRT benchmark used to evaluate grounders
 (set-info :status {result})
 
 (declare-datatype Color ((red) (blue) (green) (orange) (purple)))
-(define-fun edge ((x Int) (y Int)) Bool
-    (or
-        { "\n            ".join([f"(and (= x {a}) (= y {b}))" for (a, b) in graph])}
-    ))
+(define-fun edge ((x Int) (y Int)) Bool (or
+  {"\n  ".join([f"(and (= x {a}) (= y {b}))" for (a, b) in graph])}
+))
 (declare-fun colorOf (Int) Color)
 (assert
     (forall ((x Int) (y Int))

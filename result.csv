@@ -5,16 +5,9 @@ Perhaps an exception was thrown during stack unwinding.
 terminate called after throwing an instance of 'St9bad_alloc'
   what():  std::bad_alloc",2026-04-29T13:42:28.594954
 CommonItems,xmt,0.5214,,2026-04-29T13:42:29.144520
-CompleteSets,z3,300.2972,Time out,2026-04-29T13:47:29.583545
-CompleteSets,cvc5,300.2633,Time out,2026-04-29T13:52:29.846981
-CompleteSets,xmt,2.7718,"stderr : Incorrect: Z3 version: Z3 4.16.0.0
-sat",2026-04-29T13:52:32.650557
 GraphColoring,z3,74.6831,"stderr : (error ""out of memory"")",2026-04-29T13:53:47.432752
 GraphColoring,cvc5,300.1192,Time out,2026-04-29T13:58:47.552198
 GraphColoring,xmt,0.5059,,2026-04-29T13:58:48.093148
-N_queens,z3,0.0070,"stderr : Incorrect: (error ""line 74 column 1: unexpected end of string"")",2026-04-29T13:58:48.102652
-N_queens,cvc5,0.0188,,2026-04-29T13:58:48.121559
-N_queens,xmt,2.3081,,2026-04-29T13:58:50.430225
 NonPartitionRemovalColoring,z3,300.1985,Time out,2026-04-29T14:03:50.633564
 NonPartitionRemovalColoring,cvc5,81.5132,,2026-04-29T14:05:12.147084
 NonPartitionRemovalColoring,xmt,8.7649,,2026-04-29T14:05:20.914144
@@ -30,9 +23,9 @@ QuasiGroup,xmt,56.3019,,2026-04-29T14:17:12.860910
 TGCheckSat,z3,24.6811,,2026-04-29T14:17:37.544578
 TGCheckSat,cvc5,2.4904,,2026-04-29T14:17:40.035134
 TGCheckSat,xmt,0.0375,,2026-04-29T14:17:40.073800
-N_queens,z3,5.9071,,2026-04-29T18:19:41.035446
-N_queens,cvc5,0.0161,"stderr : Incorrect: (error ""Parse Error: <stdin>:58.26: Functions (of non-zero arity) cannot be declared in logic LIA. Try including UF or adding the prefix HO_."")",2026-04-29T18:19:41.051759
-N_queens,xmt,2.5073,,2026-04-29T18:19:43.560523
 N_queens,z3,4.2975,,2026-04-29T18:20:10.385076
 N_queens,cvc5,0.0170,stderr : Incorrect: unknown,2026-04-29T18:20:10.402276
 N_queens,xmt,2.2758,,2026-04-29T18:20:12.678587
+CompleteSets,z3,300.2191,Time out,2026-04-30T12:32:33.082685
+CompleteSets,cvc5,300.2463,Time out,2026-04-30T12:37:33.329217
+CompleteSets,xmt,2.7300,,2026-04-30T12:37:36.090934

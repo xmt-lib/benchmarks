@@ -15,7 +15,7 @@ p = [(i, i+1, i+2) for i in range(0,size) if i+2<size]
 
 #  Run the scripts
 
-logic = "DTLIA"
+logic = "UFDTLIA"
 result = "sat"
 
 smt = f"""
@@ -28,7 +28,7 @@ Generator: https://github.com/xmt-lib/benchmarks
 Application: industrial configuration problem
 Target solver: Z3
 Publications: https://arxiv.org/abs/2602.19102
-Time limit: 600
+Time limit: 300
 From the DIRT benchmark used to evaluate grounders
 |)
 (set-info :license "https://creativecommons.org/licenses/by/4.0/")

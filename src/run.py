@@ -13,7 +13,7 @@ if not os.path.exists('result.csv'):
         writer = csv.writer(csvfile)
         writer.writerow(['name', 'solver', 'solve time', 'error', 'run date'])
 
-timeout = 300
+timeout = 300  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 8 * GB
 

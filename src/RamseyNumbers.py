@@ -70,42 +70,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-    (declare-fun Node (Int) Bool)
-    (x-interpret-pred Node (x-range 1 {number}))
-
-    (declare-fun blue (Int Int) Bool)
-    (declare-fun red (Int Int) Bool)
-
-    ;     arc(X,Y) :- node(X), node(Y), X < Y.
-    ;     blue(X, Y) :- arc(X, Y), not red(X, Y).
-    ;     red(X, Y) :- arc(X, Y), not blue(X, Y).
-    ; means that the domain of blue and red is arc(X,Y),
-    ; and that they are opposite to each other
-    (assert (forall ((x Int) (y Int))
-                (=> (and (Node x) (Node y) (< x y))
-                    (=  (red x y) (not (blue x y))))))
-
-    (assert (forall ((X Int) (W Int) (Y Int) (Z Int) (T Int))
-            (not (and (Node X) (Node W) (Node Y) (Node Z) (Node T)
-                        (and (< W X Y Z T) ; (< W Y) (< W Z) (< W T) (< X Z) (< X T) (< Y T)
-                            (red W X) (red X Y) (red Y Z) (red Z T)
-                            (red W Y) (red W Z) (red W T)
-                            (red X Z) (red X T) (red Y T)
-                            )))))
-
-    (assert (forall ((X Int) (W Int) (Y Int) (Z Int) (T Int))
-            (not (and (Node X) (Node W) (Node Y) (Node Z) (Node T)
-                        (and (< W X Y Z T) ; (< W Y) (< W Z) (< W T) (< X Z) (< X T) (< Y T)
-                            (blue W X) (blue X Y) (blue Y Z) (blue Z T)
-                            (blue W Y) (blue W Z) (blue W T)
-                            (blue X Z) (blue X T) (blue Y T)
-                            )))))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

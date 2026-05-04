@@ -53,20 +53,7 @@ From the DIRT benchmark used to evaluate grounders
 (check-sat)
 """
 
-run_z3(smt, logic, name, result)
-run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-    (declare-datatype Domain ( ({") (".join(elems)}) ))
-    (declare-fun p (Domain) Bool)
-    (declare-fun q (Domain) Bool)
-    (assert (forall ((x Domain)) (or (p x) (q x))))
-    (x-interpret-pred p (x-set {" ".join([f'({p})' for p in ps])}))
-    (x-interpret-pred q (x-set {" ".join([f'({q})' for q in qs])}))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+# run_z3(smt, logic, name, result)
+# run_cvc5(smt, name, result)
+run_xmt(smt, name, result)
 

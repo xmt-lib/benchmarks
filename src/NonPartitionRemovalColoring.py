@@ -67,48 +67,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-    (declare-datatype Vertex ( {" ".join([f'(a{i})' for i in vertex])} ))
-    (declare-datatype Color ( (red) (green) (blue) ))
-
-    (declare-fun edge (Vertex Vertex) Bool)
-    (declare-fun keep (Vertex) Bool)
-    (declare-fun kept_edge (Vertex Vertex) Bool)
-    (declare-fun color (Vertex) Color)
-
-    ;     keep(X) :- vertex(X), not delete(X).
-    ;     delete(X) :- vertex(X), not keep(X).
-    ; means that keep has domain Vertex
-
-
-    ; :- delete(X), vertex(Y), not keep(Y), X != Y.
-
-    (assert (forall ((x Vertex) (y Vertex))
-                    (or (keep x) (keep y) (= x y))))
-
-    ; kept_edge(V1, V2) :- keep(V1), keep(V2), edge(V1, V2).
-    (assert (forall ((x Vertex) (y Vertex))
-                    (= (kept_edge x y)
-                    (and (keep x) (keep y) (edge x y)))))
-
-    ;     blue(N) :- keep(N), not red(N), not green(N).
-    ;     red(N) :- keep(N), not blue(N), not green(N).
-    ;     green(N) :- keep(N), not red(N), not blue(N).
-    ; means that color is a function
-
-    ; :- kept_edge(N1,N2), blue(N1), blue(N2).
-    ; :- kept_edge(N1,N2), red(N1), red(N2).
-    ; :- kept_edge(N1,N2), green(N1), green(N2).
-    (assert (forall ((x Vertex) (y Vertex))
-                    (=> (kept_edge x y)
-                        (not (= (color x) (color y))))))
-
-    (x-interpret-pred edge (x-set {' '.join([f'(a{n1} a{n2})' for (n1, n2) in edge])}))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

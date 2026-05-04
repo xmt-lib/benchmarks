@@ -56,29 +56,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-    (declare-fun Val (Int) Bool)
-    (x-interpret-pred Val (x-set {" ".join([f'({i})' for i in range(1, n+1)])}))
-
-    (declare-fun queen (Int) Int)
-    (assert (forall ((v Int))
-                (=> (Val v)
-                    (Val (queen v)))))
-
-    (assert (forall ((v1 Int) (v2 Int))
-                (=> (and (Val v1) (Val v2) (< v1 v2))
-                    (not (= (queen v1) (queen v2))))))
-    (assert (forall ((v1 Int) (v2 Int))
-                (=> (and (Val v1) (Val v2) (< v1 v2))
-                    (not (= (+ (queen v1) v1) (+ (queen v2) v2))))))
-    (assert (forall ((v1 Int) (v2 Int))
-                (=> (and (Val v1) (Val v2) (< v1 v2))
-                    (not (= (- (queen v1) v1) (- (queen v2) v2))))))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

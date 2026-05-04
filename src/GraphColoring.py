@@ -51,21 +51,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-    (declare-datatype Color ((red) (blue) (green) (orange) (purple)))
-    (declare-fun edge (Int Int) Bool)
-    (declare-fun colorOf (Int) Color)
-    (assert
-        (forall ((x Int) (y Int))
-            (=> (edge x y) (not (= (colorOf x) (colorOf y))))
-        )
-    )
-    (x-interpret-pred edge (x-set
-        { "\n        ".join([f"({a} {b})" for (a, b) in graph])}
-    ))
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

@@ -16,6 +16,7 @@ if not os.path.exists('result.csv'):
 timeout = 300  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 10 * GB
+WRITE = False
 
 def limit_memory():
     resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
@@ -68,20 +69,21 @@ def run_xmt(script, name, result):
 def run_z3(script, logic, name, result):
     print("running z3")
 
-    output_dir = os.path.join(
-        "..",
-        "benchmark-submission",
-        "non-incremental",
-        logic,
-        "2026-05-28-Grounders"
-    )
-    os.makedirs(output_dir, exist_ok=True)
+    if WRITE:
+        output_dir = os.path.join(
+            "..",
+            "benchmark-submission",
+            "non-incremental",
+            logic,
+            "2026-04-28-Grounders"
+        )
+        os.makedirs(output_dir, exist_ok=True)
 
-    path = os.path.join(output_dir, f"{name}.smt")
-    with open(path, "w", encoding="utf-8") as file:
-        file.write(script)
+        path = os.path.join(output_dir, f"{name}.smt")
+        with open(path, "w", encoding="utf-8") as file:
+            file.write(script)
 
-    print(f"Saved SMT script to: {path}")
+        print(f"Saved SMT script to: {path}")
 
     start_time = time.time()
 

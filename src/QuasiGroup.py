@@ -88,55 +88,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-    (declare-fun Domain (Int) Bool)
-    (x-interpret-pred Domain (x-set {" ".join([f'({i})' for i in domain])}))
-
-    (declare-fun v (Int Int) Bool)
-    (declare-fun state (Int Int Int) Bool)
-    (declare-fun assign (Int Int Int) Bool)
-    (declare-fun assigned (Int) Bool)
-
-    ;    assign(V,X,Y):-v(X,Y),domain(V),not nassign(V,X,Y).
-    ;    nassign(V,X,Y):-v(X,Y),domain(V),not assign(V,X,Y).
-    ; mean that the domain of `assign` is `domain * v`.
-    ; No atoms are generated outside of this domain.
-    ; We use this in the assertions below
-
-    (assert (forall ((V Int))
-                (=> (Domain V)
-                    (= (assigned V)
-                    (exists ((x Int) (y Int))
-                        (and (v x y)
-                            (assign V x y)))))))
-
-    ; :-assign(V,X1,Y),assign(V,X2,Y),X1<X2.
-    (assert (forall ((V Int) (x1 Int) (x2 Int) (y Int))
-                (=> (and (Domain V) (v x1 y) (v x2 y))
-                    (not (and (assign V x1 y) (assign V x2 y) (< x1 x2))))))
-
-    ; :-assign(V,X,Y1),assign(V,X,Y2),Y1<Y2.
-    (assert (forall ((V Int) (x Int) (y1 Int) (y2 Int))
-                (=> (and (Domain V) (v x y1) (v x y2))
-                    (not (and (assign V x y1) (assign V x y2) (< y1 y2))))))
-
-    ; :-state(X,Y,S), not assign(S,X,Y).
-    (assert (forall ((s Int) (x Int) (y Int))
-                (=> (and (Domain s) (v x y))
-                    (not (and (state x y s) (not (assign s x y)))))))
-
-    ; :-domain(V),not assigned(V).
-    (assert (forall ((V Int))
-                (=> (Domain V)
-                    (assigned V))))
-
-    (x-interpret-pred v (x-set {" ".join([f'({" ".join([f"{x}" for x in st])})' for st in v])}))
-    (x-interpret-pred state (x-set {" ".join([f'({" ".join([f"{x}" for x in st])})' for st in state])}))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

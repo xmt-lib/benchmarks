@@ -51,22 +51,5 @@ From the DIRT benchmark used to evaluate grounders
 
 run_z3(smt, logic, name, result)
 run_cvc5(smt, name, result)
-
-xmt = f"""
-    (set-option :backend Z3)
-
-(declare-datatype Node ( {" ".join(f'(a{i})' for i in range(0, size))} ))
-(declare-fun p (Node Node Node) Bool)
-(declare-fun edge (Node Node) Bool)
-
-(x-interpret-pred edge (x-set {" ".join([f"(a{x[0]} a{x[1]})" for x in edge])}) )
-(x-interpret-pred p (x-set {" ".join([f"(a{x[0]} a{x[1]} a{x[2]})" for x in p])}) )
-
-(assert (forall ((x Node) (y Node) (z Node))
-                (= (p x y z)
-                   (and (edge x y) (edge y z) (edge x z)) )))
-
-    (check-sat)
-"""
-run_xmt(xmt, name, result)
+run_xmt(smt, name, result)
 

@@ -6,22 +6,25 @@ import resource
 import csv
 from datetime import datetime
 
-print(subprocess.check_output(["z3", "--version"], text=True))
-
-if not os.path.exists('result.csv'):
-    with open('result.csv', 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['name', 'solver', 'solve time', 'error', 'run date'])
-
 timeout = 300  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 10 * GB
 WRITE = False
 
+print(subprocess.check_output(["z3", "--version"], text=True))
+
+def write_result(csv_path, name, solver, end_time, error):
+    file_exists = os.path.exists(csv_path)
+    with open(csv_path, 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        if not file_exists:
+            writer.writerow(['name', 'solver', 'solve time', 'error', 'run date'])
+        writer.writerow([name, solver, end_time, error or "", datetime.now().isoformat()])
+
 def limit_memory():
     resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
 
-def run_xmt(script, name, result):
+def run_xmt(script, name, result, csv):
     print("running xmt")
     with tempfile.NamedTemporaryFile("w") as file:
         file.write(script)
@@ -61,12 +64,10 @@ def run_xmt(script, name, result):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    with open('result.csv', 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([name, "xmt", end_time, error or "", datetime.now().isoformat()])
+    write_result(csv, name, "xmt", end_time, error)
 
 
-def run_z3(script, logic, name, result):
+def run_z3(script, logic, name, result, csv):
     print("running z3")
 
     if WRITE:
@@ -119,11 +120,9 @@ def run_z3(script, logic, name, result):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    with open('result.csv', 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([name, "z3", end_time, error or "", datetime.now().isoformat()])
+    write_result(csv, name, "z3", end_time, error)
 
-def run_cvc5(script, name, result):
+def run_cvc5(script, name, result, csv):
     print("running cvc5")
     start_time = time.time()
 
@@ -159,6 +158,4 @@ def run_cvc5(script, name, result):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    with open('result.csv', 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([name, "cvc5", end_time, error or "", datetime.now().isoformat()])
+    write_result(csv, name, "cvc5", end_time, error)

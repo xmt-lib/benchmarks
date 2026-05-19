@@ -6,4 +6,5 @@ import src.NonPartitionRemovalColoring
 import src.PackingProblem
 import src.PPM
 import src.QuasiGroup
+import src.RamseyNumbers
 import src.TGCheckSat

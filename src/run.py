@@ -13,18 +13,18 @@ WRITE = False
 
 print(subprocess.check_output(["z3", "--version"], text=True))
 
-def write_result(csv_path, name, solver, end_time, error):
+def write_result(csv_path, name, size, solver, end_time, error):
     file_exists = os.path.exists(csv_path)
     with open(csv_path, 'a', newline='') as csvfile:
         writer = csv.writer(csvfile)
         if not file_exists:
-            writer.writerow(['name', 'solver', 'solve time', 'error', 'run date'])
-        writer.writerow([name, solver, end_time, error or "", datetime.now().isoformat()])
+            writer.writerow(['name', 'size', 'solver', 'solve time', 'error', 'run date'])
+        writer.writerow([name, size, solver, end_time, error or "", datetime.now().isoformat()])
 
 def limit_memory():
     resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
 
-def run_xmt(script, name, result, csv):
+def run_xmt(script, name, size, result, csv):
     print("running xmt")
     with tempfile.NamedTemporaryFile("w") as file:
         file.write(script)
@@ -64,10 +64,10 @@ def run_xmt(script, name, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, "xmt", end_time, error)
+    write_result(csv, name, size, "xmt", end_time, error)
 
 
-def run_z3(script, logic, name, result, csv):
+def run_z3(script, logic, name, size, result, csv):
     print("running z3")
 
     if WRITE:
@@ -120,9 +120,9 @@ def run_z3(script, logic, name, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, "z3", end_time, error)
+    write_result(csv, name, size, "z3", end_time, error)
 
-def run_cvc5(script, name, result, csv):
+def run_cvc5(script, name, size, result, csv):
     print("running cvc5")
     start_time = time.time()
 
@@ -158,4 +158,4 @@ def run_cvc5(script, name, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, "cvc5", end_time, error)
+    write_result(csv, name, size, "cvc5", end_time, error)

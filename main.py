@@ -1,4 +1,5 @@
 import argparse
+import inspect
 from src.run import run_z3, run_cvc5, run_xmt
 import src.CommonItems
 import src.CompleteSets
@@ -42,11 +43,14 @@ def main():
 
             # Generate the SMT/XMT scripts with default parameters
             smt, xmt = b.generate()
+            sig = inspect.signature(b.generate)
+            first_param = list(sig.parameters.values())[0]
+            size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            # run_z3(smt, b.logic, b.name, b.result, csv="smt.csv")
-            # run_cvc5(smt, b.name, b.result, csv="smt.csv")
-            run_xmt(xmt, b.name, b.result, csv="coloring.csv")
+            # run_z3(smt, b.logic, b.name, size, b.result, csv="smt.csv")
+            # run_cvc5(smt, b.name, size, b.result, csv="smt.csv")
+            run_xmt(xmt, b.name, size, b.result, csv="coloring.csv")
     elif args.smt:
         benchmarks = [
             src.CommonItems,
@@ -68,11 +72,14 @@ def main():
 
             # Generate the SMT/XMT scripts with default parameters
             smt, xmt = b.generate()
+            sig = inspect.signature(b.generate)
+            first_param = list(sig.parameters.values())[0]
+            size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            run_z3(smt, b.logic, b.name, b.result, csv="smt.csv")
-            run_cvc5(smt, b.name, b.result, csv="smt.csv")
-            run_xmt(xmt, b.name, b.result, csv="smt.csv")
+            run_z3(smt, b.logic, b.name, size, b.result, csv="smt.csv")
+            run_cvc5(smt, b.name, size, b.result, csv="smt.csv")
+            run_xmt(xmt, b.name, size, b.result, csv="smt.csv")
     elif args.asp:
         print("Option --asp is not defined yet.")
 

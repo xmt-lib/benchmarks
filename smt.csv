@@ -1,28 +1,28 @@
-name,solver,solve time,error,run date
-CommonItems,z3,300.2016,Time out,2026-04-30T13:07:53.508615
-CommonItems,cvc5,91.8966,"stderr : Incorrect: (error ""std::bad_alloc"")",2026-04-30T13:09:25.405475
-CommonItems,xmt,0.5089,,2026-04-30T13:09:25.942663
-CompleteSets,z3,300.2996,Time out,2026-04-30T13:14:26.377069
-CompleteSets,cvc5,300.2194,Time out,2026-04-30T13:19:26.596713
-CompleteSets,xmt,2.6923,,2026-04-30T13:19:29.333198
-GraphColoring,z3,72.9178,"stderr : (error ""out of memory"")",2026-04-30T13:20:42.328431
-GraphColoring,cvc5,300.1205,Time out,2026-04-30T13:25:42.449081
-GraphColoring,xmt,0.4991,,2026-04-30T13:25:42.968859
-N_queens,z3,4.1579,,2026-04-30T13:25:47.132512
-N_queens,cvc5,0.0174,stderr : Incorrect: unknown,2026-04-30T13:25:47.150063
-N_queens,xmt,2.1925,,2026-04-30T13:25:49.342896
-NonPartitionRemovalColoring,z3,300.2762,Time out,2026-04-30T13:30:49.626504
-NonPartitionRemovalColoring,cvc5,80.2385,,2026-04-30T13:32:09.865089
-NonPartitionRemovalColoring,xmt,8.4330,,2026-04-30T13:32:18.309618
-PackingProblem,z3,1.9263,,2026-04-30T13:32:20.250268
-PackingProblem,cvc5,2.4509,stderr : Incorrect: unknown,2026-04-30T13:32:22.701263
-PackingProblem,xmt,0.1395,,2026-04-30T13:32:22.841120
-PPM,z3,33.3376,,2026-04-30T13:32:56.191592
-PPM,cvc5,300.0284,Time out,2026-04-30T13:37:56.220160
-PPM,xmt,15.5629,,2026-04-30T13:38:11.783539
-QuasiGroup,z3,300.0618,Time out,2026-04-30T13:43:11.862216
-QuasiGroup,cvc5,0.0338,stderr : Incorrect: unknown,2026-04-30T13:43:11.896180
-QuasiGroup,xmt,57.3757,,2026-04-30T13:44:09.274032
-TGCheckSat,z3,24.4520,,2026-04-30T13:44:33.737826
-TGCheckSat,cvc5,2.2872,,2026-04-30T13:44:36.025100
-TGCheckSat,xmt,0.0378,,2026-04-30T13:44:36.064537
+name,size,solver,solve time,error,run date
+CommonItems,200000,z3,300.2016,Time out,2026-04-30T13:07:53.508615
+CommonItems,200000,cvc5,91.8966,"stderr : Incorrect: (error ""std::bad_alloc"")",2026-04-30T13:09:25.405475
+CommonItems,200000,xmt,0.5089,,2026-04-30T13:09:25.942663
+CompleteSets,200000,z3,300.2996,Time out,2026-04-30T13:14:26.377069
+CompleteSets,200000,cvc5,300.2194,Time out,2026-04-30T13:19:26.596713
+CompleteSets,200000,xmt,2.6923,,2026-04-30T13:19:29.333198
+GraphColoring,2500,z3,72.9178,"stderr : (error ""out of memory"")",2026-04-30T13:20:42.328431
+GraphColoring,2500,cvc5,300.1205,Time out,2026-04-30T13:25:42.449081
+GraphColoring,2500,xmt,0.4991,,2026-04-30T13:25:42.968859
+N_queens,37,z3,4.1579,,2026-04-30T13:25:47.132512
+N_queens,37,cvc5,0.0174,stderr : Incorrect: unknown,2026-04-30T13:25:47.150063
+N_queens,37,xmt,2.1925,,2026-04-30T13:25:49.342896
+NonPartitionRemovalColoring,1,z3,300.2762,Time out,2026-04-30T13:30:49.626504
+NonPartitionRemovalColoring,1,cvc5,80.2385,,2026-04-30T13:32:09.865089
+NonPartitionRemovalColoring,1,xmt,8.4330,,2026-04-30T13:32:18.309618
+PackingProblem,1,z3,1.9263,,2026-04-30T13:32:20.250268
+PackingProblem,1,cvc5,2.4509,stderr : Incorrect: unknown,2026-04-30T13:32:22.701263
+PackingProblem,1,xmt,0.1395,,2026-04-30T13:32:22.841120
+PPM,1,z3,33.3376,,2026-04-30T13:32:56.191592
+PPM,1,cvc5,300.0284,Time out,2026-04-30T13:37:56.220160
+PPM,1,xmt,15.5629,,2026-04-30T13:38:11.783539
+QuasiGroup,1,z3,300.0618,Time out,2026-04-30T13:43:11.862216
+QuasiGroup,1,cvc5,0.0338,stderr : Incorrect: unknown,2026-04-30T13:43:11.896180
+QuasiGroup,1,xmt,57.3757,,2026-04-30T13:44:09.274032
+TGCheckSat,250,z3,24.4520,,2026-04-30T13:44:33.737826
+TGCheckSat,250,cvc5,2.2872,,2026-04-30T13:44:36.025100
+TGCheckSat,250,xmt,0.0378,,2026-04-30T13:44:36.064537

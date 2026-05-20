@@ -1,6 +1,6 @@
 import argparse
 import inspect
-from src.run import run_z3, run_cvc5, run_xmt
+from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT
 import src.CommonItems
 import src.CompleteSets
 import src.GraphColoring.int_define
@@ -38,11 +38,11 @@ def main():
             src.GraphColoring.grounded,
         ]
 
-        solvers = [run_z3, run_cvc5, run_xmt]
+        solvers = [run_z3, run_xmt]  # , run_cvc5
         for solver in solvers:
             for benchmark in benchmarks:
                 size = 50
-                while size <= 2500:
+                while size <= 1000:
                     solver_name = solver.__name__.replace("run_", "")
                     print(f"========================================")
                     print(f"Running benchmark: {benchmark.name} | Solver: {solver_name} | Size: {size}")
@@ -59,7 +59,8 @@ def main():
                         print(f"Solver {solver_name} timed out for {benchmark.name} at size {size}. Stopping size loop.")
                         break
 
-                    size = min(size * 2, 2501)
+                    size = int(size * 1.2)
+                    plot_coloring_results()
     elif args.smt:
         benchmarks = [
             src.CommonItems,
@@ -91,6 +92,66 @@ def main():
             run_xmt(xmt, benchmark, size, csv="smt.csv")
     elif args.asp:
         print("Option --asp is not defined yet.")
+
+def plot_coloring_results(csv_path="coloring.csv", output_path="coloring.png"):
+    import os
+    import csv
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from collections import defaultdict
+
+    if not os.path.exists(csv_path):
+        print(f"No {csv_path} found to generate plot.")
+        return
+
+    # Read data and handle potential duplicates by keeping the latest entry for each (solver, name, size)
+    latest_runs = {}
+    with open(csv_path, "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                name = row["name"]
+                size = int(row["size"])
+                solver = row["solver"]
+                error = row.get("error", "").strip()
+                if error:
+                    solve_time = float(TIMEOUT)
+                else:
+                    solve_time = float(row["solve time"])
+                latest_runs[(solver, name, size)] = solve_time
+            except (ValueError, KeyError):
+                continue
+
+    # Group by (solver, name) -> list of (size, solve_time)
+    plot_data = defaultdict(list)
+    for (solver, name, size), solve_time in latest_runs.items():
+        plot_data[(solver, name)].append((size, solve_time))
+
+    # Sort the points by size for each line
+    for key in plot_data:
+        plot_data[key].sort(key=lambda x: x[0])
+
+    plt.style.use('seaborn-v0_8-whitegrid')
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    for (solver, name), points in plot_data.items():
+        sizes = [p[0] for p in points]
+        times = [p[1] for p in points]
+
+        # Thick line for xmt lines, and a regular line for all others
+        linewidth = 3.0 if solver == "xmt" else 1.5
+        ax.plot(sizes, times, linewidth=linewidth)
+
+    ax.set_yscale('log')
+    ax.set_xlabel('Size')
+    ax.set_ylabel('Solve Time (s) [log scale]')
+    ax.set_title('Graph Coloring Benchmarks - Solve Time vs Size')
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300)
+    plt.close()
+    print(f"Generated plot saved to {output_path}")
 
 if __name__ == "__main__":
     main()

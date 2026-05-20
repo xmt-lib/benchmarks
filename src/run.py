@@ -6,7 +6,7 @@ import resource
 import csv
 from datetime import datetime
 
-timeout = 20  # seconds
+TIMEOUT = 20  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 5 * GB
 WRITE = False
@@ -39,7 +39,7 @@ def run_xmt(script, benchmark, size, csv):
                 ["../xmtcom/target/release/xmt-lib", file.name],
                 text=True,
                 capture_output=True,
-                timeout=timeout,
+                timeout=TIMEOUT,
                 preexec_fn=limit_memory
             )
             stdout = process.stdout
@@ -55,7 +55,7 @@ def run_xmt(script, benchmark, size, csv):
                 error = f"stderr : {error.strip()}"
 
         except subprocess.TimeoutExpired:
-            print(f"Error: xmt-lib execution timed out after {timeout} seconds.")
+            print(f"Error: xmt-lib execution timed out after {TIMEOUT} seconds.")
             error = "Time out"
         except Exception as e:
             print(f"Error evaluating SMT-LIB: {e}")
@@ -96,7 +96,7 @@ def run_z3(script, benchmark, size, csv):
             input=script,
             text=True,
             capture_output=True,
-            timeout=timeout,
+            timeout=TIMEOUT,
             preexec_fn=limit_memory
         )
         stdout = process.stdout
@@ -112,7 +112,7 @@ def run_z3(script, benchmark, size, csv):
             error = f"stderr : {error.strip()}"
 
     except subprocess.TimeoutExpired:
-        print(f"Error: xmt-lib execution timed out after {timeout} seconds.")
+        print(f"Error: xmt-lib execution timed out after {TIMEOUT} seconds.")
         error = "Time out"
     except Exception as e:
         print(f"Error evaluating SMT-LIB: {e}")
@@ -135,7 +135,7 @@ def run_cvc5(script, benchmark, size, csv):
             input=script,
             text=True,
             capture_output=True,
-            timeout=timeout,
+            timeout=TIMEOUT,
             preexec_fn=limit_memory
         )
         stdout = process.stdout
@@ -151,7 +151,7 @@ def run_cvc5(script, benchmark, size, csv):
             error = f"stderr : {error.strip()}"
 
     except subprocess.TimeoutExpired:
-        print(f"Error: xmt-lib execution timed out after {timeout} seconds.")
+        print(f"Error: xmt-lib execution timed out after {TIMEOUT} seconds.")
         error = "Time out"
     except Exception as e:
         print(f"Error evaluating SMT-LIB: {e}")

@@ -1,3 +1,53 @@
 name,size,solver,solve time,error,run date
-int_define,2500,xmt,0.6916,,2026-05-19T22:03:14.865399
-datatype_define,2500,xmt,0.7887,,2026-05-19T22:03:15.713825
+int_define,50,z3,0.0279,,2026-05-20T10:14:51.379161
+int_define,100,z3,0.7252,,2026-05-20T10:14:52.105128
+int_define,200,z3,3.2057,,2026-05-20T10:14:55.311533
+int_define,400,z3,12.3492,,2026-05-20T10:15:07.662607
+int_define,800,z3,17.0680,"stderr : (error ""out of memory"")",2026-05-20T10:15:24.738189
+int_define,1600,z3,5.6595,,2026-05-20T10:15:30.422804
+datatype_define,50,z3,0.0180,,2026-05-20T10:15:30.441196
+datatype_define,100,z3,0.4803,,2026-05-20T10:15:30.921906
+datatype_define,200,z3,18.0807,,2026-05-20T10:15:49.003169
+datatype_define,400,z3,0.3218,,2026-05-20T10:15:49.326946
+datatype_define,800,z3,11.7928,,2026-05-20T10:16:01.126219
+datatype_define,1600,z3,20.1140,Time out,2026-05-20T10:16:21.265500
+int_assert,50,z3,0.0721,,2026-05-20T10:16:21.338074
+int_assert,100,z3,1.4757,,2026-05-20T10:16:22.814095
+int_assert,200,z3,20.0391,Time out,2026-05-20T10:16:42.853762
+datatype_assert,50,z3,0.0531,,2026-05-20T10:16:42.907222
+datatype_assert,100,z3,0.8669,,2026-05-20T10:16:43.774515
+datatype_assert,200,z3,0.6186,,2026-05-20T10:16:44.393813
+datatype_assert,400,z3,20.0594,Time out,2026-05-20T10:17:04.454852
+int_define,50,cvc5,0.0808,stderr : Incorrect: unknown,2026-05-20T10:17:04.536021
+int_define,100,cvc5,0.0214,stderr : Incorrect: unknown,2026-05-20T10:17:04.557906
+int_define,200,cvc5,0.1688,stderr : Incorrect: unknown,2026-05-20T10:17:04.727331
+int_define,400,cvc5,2.3712,stderr : Incorrect: unknown,2026-05-20T10:17:07.100065
+int_define,800,cvc5,20.0253,Time out,2026-05-20T10:17:27.130372
+datatype_define,50,cvc5,0.0083,stderr : Incorrect: unknown,2026-05-20T10:17:27.139022
+datatype_define,100,cvc5,0.0251,stderr : Incorrect: unknown,2026-05-20T10:17:27.164524
+datatype_define,200,cvc5,0.1911,stderr : Incorrect: unknown,2026-05-20T10:17:27.356354
+datatype_define,400,cvc5,2.4334,stderr : Incorrect: unknown,2026-05-20T10:17:29.791704
+datatype_define,800,cvc5,20.0253,Time out,2026-05-20T10:17:49.822199
+int_assert,50,cvc5,20.0226,Time out,2026-05-20T10:18:09.845138
+datatype_assert,50,cvc5,20.0226,Time out,2026-05-20T10:18:29.868082
+int_define,50,xmt,0.0714,,2026-05-20T10:18:29.941070
+int_define,100,xmt,0.0223,,2026-05-20T10:18:29.964086
+int_define,200,xmt,0.0320,,2026-05-20T10:18:29.996854
+int_define,400,xmt,0.0364,,2026-05-20T10:18:30.036017
+int_define,800,xmt,0.0878,,2026-05-20T10:18:30.129278
+int_define,1600,xmt,0.2899,,2026-05-20T10:18:30.444703
+datatype_define,50,xmt,0.0208,,2026-05-20T10:18:30.467096
+datatype_define,100,xmt,0.0204,,2026-05-20T10:18:30.488361
+datatype_define,200,xmt,0.0255,,2026-05-20T10:18:30.514880
+datatype_define,400,xmt,0.0392,,2026-05-20T10:18:30.556316
+datatype_define,800,xmt,0.0949,,2026-05-20T10:18:30.661631
+datatype_define,1600,xmt,0.3255,,2026-05-20T10:18:31.017555
+int_assert,50,xmt,0.0477,,2026-05-20T10:18:31.066060
+int_assert,100,xmt,0.9286,,2026-05-20T10:18:31.995224
+int_assert,200,xmt,7.9410,,2026-05-20T10:18:39.937065
+int_assert,400,xmt,20.0575,Time out,2026-05-20T10:18:59.996187
+datatype_assert,50,xmt,0.0480,,2026-05-20T10:19:00.044761
+datatype_assert,100,xmt,0.9568,,2026-05-20T10:19:01.002415
+datatype_assert,200,xmt,5.3018,,2026-05-20T10:19:06.305357
+datatype_assert,400,xmt,2.7848,,2026-05-20T10:19:09.093120
+datatype_assert,800,xmt,20.0579,Time out,2026-05-20T10:19:29.156689

@@ -36,21 +36,28 @@ def main():
             src.GraphColoring.datatype_assert,
         ]
 
-        for b in benchmarks:
-            print(f"========================================")
-            print(f"Running benchmark: {b.name}")
-            print(f"========================================")
+        solvers = [run_z3, run_cvc5, run_xmt]
+        for solver in solvers:
+            for benchmark in benchmarks:
+                size = 50
+                while size <= 2500:
+                    solver_name = solver.__name__.replace("run_", "")
+                    print(f"========================================")
+                    print(f"Running benchmark: {benchmark.name} | Solver: {solver_name} | Size: {size}")
+                    print(f"========================================")
 
-            # Generate the SMT/XMT scripts with default parameters
-            smt, xmt = b.generate()
-            sig = inspect.signature(b.generate)
-            first_param = list(sig.parameters.values())[0]
-            size = 1 if first_param.name == "file_path" else first_param.default
+                    # Generate the SMT/XMT scripts with current size
+                    smt, xmt = benchmark.generate(size)
 
-            # Execute solver runs
-            # run_z3(smt, b.logic, b.name, size, b.result, csv="smt.csv")
-            # run_cvc5(smt, b.name, size, b.result, csv="smt.csv")
-            run_xmt(xmt, b.name, size, b.result, csv="coloring.csv")
+                    # Execute solver run
+                    script = xmt if solver == run_xmt else smt
+                    success = solver(script, benchmark, size, csv="coloring.csv")
+
+                    if not success:
+                        print(f"Solver {solver_name} timed out for {benchmark.name} at size {size}. Stopping size loop.")
+                        break
+
+                    size = min(size * 2, 2501)
     elif args.smt:
         benchmarks = [
             src.CommonItems,
@@ -65,21 +72,21 @@ def main():
             src.TGCheckSat,
         ]
 
-        for b in benchmarks:
+        for benchmark in benchmarks:
             print(f"========================================")
-            print(f"Running benchmark: {b.name}")
+            print(f"Running benchmark: {benchmark.name}")
             print(f"========================================")
 
             # Generate the SMT/XMT scripts with default parameters
-            smt, xmt = b.generate()
-            sig = inspect.signature(b.generate)
+            smt, xmt = benchmark.generate()
+            sig = inspect.signature(benchmark.generate)
             first_param = list(sig.parameters.values())[0]
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            run_z3(smt, b.logic, b.name, size, b.result, csv="smt.csv")
-            run_cvc5(smt, b.name, size, b.result, csv="smt.csv")
-            run_xmt(xmt, b.name, size, b.result, csv="smt.csv")
+            run_z3(smt, benchmark, size, csv="smt.csv")
+            run_cvc5(smt, benchmark, size, csv="smt.csv")
+            run_xmt(xmt, benchmark, size, csv="smt.csv")
     elif args.asp:
         print("Option --asp is not defined yet.")
 

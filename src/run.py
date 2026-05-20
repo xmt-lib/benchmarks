@@ -6,9 +6,9 @@ import resource
 import csv
 from datetime import datetime
 
-timeout = 60  # seconds
+timeout = 20  # seconds
 GB = 1024 * 1024 * 1024
-MEMORY_LIMIT = 10 * GB
+MEMORY_LIMIT = 5 * GB
 WRITE = False
 
 print(subprocess.check_output(["z3", "--version"], text=True))
@@ -24,7 +24,7 @@ def write_result(csv_path, name, size, solver, end_time, error):
 def limit_memory():
     resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
 
-def run_xmt(script, name, size, result, csv):
+def run_xmt(script, benchmark, size, csv):
     print("running xmt")
     with tempfile.NamedTemporaryFile("w") as file:
         file.write(script)
@@ -47,7 +47,7 @@ def run_xmt(script, name, size, result, csv):
 
             if stdout:
                 print(f"Result:\n{stdout.strip()}")
-                if not result in stdout:
+                if not benchmark.result in stdout:
                     print(f"*******  Incorrect result  !!!!!!!!!!")
                     error = f"Incorrect: {stdout}"
             if error:
@@ -64,10 +64,11 @@ def run_xmt(script, name, size, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, size, "xmt", end_time, error)
+    write_result(csv, benchmark.name, size, "xmt", end_time, error)
+    return error != "Time out"
 
 
-def run_z3(script, logic, name, size, result, csv):
+def run_z3(script, benchmark, size, csv):
     print("running z3")
 
     if WRITE:
@@ -75,12 +76,12 @@ def run_z3(script, logic, name, size, result, csv):
             "..",
             "benchmark-submission",
             "non-incremental",
-            logic,
+            benchmark.logic,
             "2026-04-28-Grounders"
         )
         os.makedirs(output_dir, exist_ok=True)
 
-        path = os.path.join(output_dir, f"{name}.smt")
+        path = os.path.join(output_dir, f"{benchmark.name}.smt")
         with open(path, "w", encoding="utf-8") as file:
             file.write(script)
 
@@ -103,7 +104,7 @@ def run_z3(script, logic, name, size, result, csv):
 
         if stdout:
             print(f"Result:\n{stdout.strip()}")
-            if not result in stdout:
+            if not benchmark.result in stdout:
                 print(f"*******  Incorrect result  !!!!!!!!!!")
                 error = f"Incorrect: {stdout}"
         if error:
@@ -120,9 +121,10 @@ def run_z3(script, logic, name, size, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, size, "z3", end_time, error)
+    write_result(csv, benchmark.name, size, "z3", end_time, error)
+    return error != "Time out"
 
-def run_cvc5(script, name, size, result, csv):
+def run_cvc5(script, benchmark, size, csv):
     print("running cvc5")
     start_time = time.time()
 
@@ -141,7 +143,7 @@ def run_cvc5(script, name, size, result, csv):
 
         if stdout:
             print(f"Result:\n{stdout.strip()}")
-            if not result in stdout:
+            if not benchmark.result in stdout:
                 print(f"*******  Incorrect result  !!!!!!!!!!")
                 error = f"Incorrect: {stdout}"
         if error:
@@ -158,4 +160,5 @@ def run_cvc5(script, name, size, result, csv):
     end_time = f"{time.time() - start_time:.4f}"
     print(f"Total time taken: {end_time} seconds")
 
-    write_result(csv, name, size, "cvc5", end_time, error)
+    write_result(csv, benchmark.name, size, "cvc5", end_time, error)
+    return error != "Time out"

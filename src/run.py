@@ -77,11 +77,25 @@ def run_z3(script, benchmark, size, csv):
             "benchmark-submission",
             "non-incremental",
             benchmark.logic,
-            "2026-04-28-Grounders"
+            "2026-05-20-Grounders"
         )
         os.makedirs(output_dir, exist_ok=True)
 
-        path = os.path.join(output_dir, f"{benchmark.name}.smt")
+        path = os.path.join(output_dir, f"{benchmark.name}.smt2")
+        with open(path, "w", encoding="utf-8") as file:
+            file.write(script)
+
+        print(f"Saved SMT script to: {path}")
+
+        # to xmt-lib benchmarks
+        output_dir = os.path.join(
+            "..",
+            "xmtcom",
+            "benchmarks"
+        )
+        os.makedirs(output_dir, exist_ok=True)
+
+        path = os.path.join(output_dir, f"{benchmark.name}.smt2")
         with open(path, "w", encoding="utf-8") as file:
             file.write(script)
 

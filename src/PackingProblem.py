@@ -16,12 +16,11 @@ def generate(file_path="src/PackingProblem-45-0-0.asp"):
     area_match = re.findall(r"(?m)^area\(([^,\)]+),([^,\)]+)\)\.", file_str)[0]
     area = (int(area_match[0]), int(area_match[1]))
 
-    size = "0"
+    sizes = "0"
     for (sq, s) in reversed(square):
-        size = f"(ite (= x q{sq}) {s}\n  {size})"
+        sizes = f"(ite (= x q{sq}) {s}\n  {sizes})"
 
     squares_str = " ".join([f'(q{i})' for i in range(1, max_square_num + 1)])
-    size_asserts = "\n".join([f'(assert (= (square_size q{square}) {size}))' for (square, size) in square])
     mapping_str = " ".join([f'((q{x[0]}) {x[1]})' for x in square])
 
     smt = f"""(set-info :smt-lib-version 2.6)
@@ -44,12 +43,10 @@ From the DIRT benchmark used to evaluate grounders
 
 (declare-fun pos_x (Square) Int)
 (declare-fun pos_y (Square) Int)
-(declare-fun square_size (Square) Int)
 
-{size_asserts}
-
-(declare-fun area_width () Int)
-(declare-fun area_height () Int)
+(define-fun square_size ((x Square)) Int {sizes})
+(define-fun area_width () Int {area[0]})
+(define-fun area_height () Int {area[1]})
 
 (assert (forall ((s Square)) (<= 0 (pos_x s))))
 (assert (forall ((s Square)) (<= 0 (pos_y s))))
@@ -71,8 +68,6 @@ From the DIRT benchmark used to evaluate grounders
                           (<= (+ (pos_y s2) (square_size s2)) (+ (pos_y s1) (square_size s1)))
                      )
               )))
-(assert (= area_width  {area[0]}))
-(assert (= area_height {area[1]}))
 
 (check-sat)
 """

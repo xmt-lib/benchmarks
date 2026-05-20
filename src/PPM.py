@@ -21,8 +21,14 @@ def generate(file_path="src/PPM-0007-200-0.asp"):
     patternlength = int(re.findall(r"(?m)^patternlength\(([^,\)]+)\)\.", file_str)[0])
     max_number = max(t, key=lambda x: x[0])[0]
 
-    p_asserts = "\n".join([f"(assert (= (pf {sq}) {s}))" for (sq, s) in p])
-    t_asserts = "\n".join([f"(assert (= (tf {sq}) {s}))" for (sq, s) in t])
+    pf_expr = "0"
+    for (sq, s) in reversed(p):
+        pf_expr = f"(ite (= x {sq}) {s}\n  {pf_expr})"
+
+    tf_expr = "0"
+    for (sq, s) in reversed(t):
+        tf_expr = f"(ite (= x {sq}) {s}\n  {tf_expr})"
+
     p_mapping = '\n  '.join(f"(({x[0]}) {x[1]})" for x in p)
     t_mapping = '\n  '.join(f"(({x[0]}) {x[1]})" for x in t)
 
@@ -46,13 +52,11 @@ From the DIRT benchmark used to evaluate grounders
 (define-fun smallnumber ((x Int)) Bool (<= 1 x {patternlength}))
 
 (declare-fun patternlengthf () Int)
-(declare-fun pf (Int) Int)
-{p_asserts}
+(define-fun pf ((x Int)) Int {pf_expr})
 
 (declare-fun solution (Int) Int)
 (declare-fun solutionindex (Int) Int)
-(declare-fun tf (Int) Int)
-{t_asserts}
+(define-fun tf ((x Int)) Int {tf_expr})
 
 ; co-domain
 (assert (forall ((x Int)) (=> (smallnumber x) (number (pf x)))))

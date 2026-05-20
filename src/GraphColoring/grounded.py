@@ -10,7 +10,7 @@ def generate(size=2500, density=0.01):
     graph = [(int((number) / size + 1), number % size + 1)
         for number in prng.sample(range(size * size), int(size * size * density))]
 
-    edge_expr = "\n  ".join([f"(and (= x {a}) (= y {b}))" for (a, b) in graph])
+    assertions = "\n".join([f"(assert (not (= (colorOf {a}) (colorOf {b}))))" for (a, b) in graph])
 
     smt = f"""(set-info :smt-lib-version 2.6)
 (set-logic {logic})
@@ -29,15 +29,8 @@ From the DIRT benchmark used to evaluate grounders
 (set-info :status {result})
 
 (declare-datatype Color ((red) (blue) (green) (orange) (purple)))
-(define-fun edge ((x Int) (y Int)) Bool (or
-  {edge_expr}
-))
 (declare-fun colorOf (Int) Color)
-(assert
-    (forall ((x Int) (y Int))
-        (=> (edge x y) (not (= (colorOf x) (colorOf y))))
-    )
-)
+{assertions}
 (check-sat)
 """
     return smt, smt

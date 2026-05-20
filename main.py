@@ -7,6 +7,7 @@ import src.GraphColoring.int_define
 import src.GraphColoring.int_assert
 import src.GraphColoring.datatype_define
 import src.GraphColoring.datatype_assert
+import src.GraphColoring.grounded
 import src.N_queens
 import src.NonPartitionRemovalColoring
 import src.PackingProblem
@@ -34,6 +35,7 @@ def main():
             src.GraphColoring.datatype_define,
             src.GraphColoring.int_assert,
             src.GraphColoring.datatype_assert,
+            src.GraphColoring.grounded,
         ]
 
         solvers = [run_z3, run_cvc5, run_xmt]

@@ -4,6 +4,7 @@ import src.GraphColoring.int_define
 import src.GraphColoring.int_assert
 import src.GraphColoring.datatype_define
 import src.GraphColoring.datatype_assert
+import src.GraphColoring.grounded
 import src.N_queens
 import src.NonPartitionRemovalColoring
 import src.PackingProblem

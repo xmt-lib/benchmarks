@@ -65,7 +65,7 @@ def run_xmt(script, benchmark, size, csv):
     print(f"Total time taken: {end_time} seconds")
 
     write_result(csv, benchmark.name, size, "xmt", end_time, error)
-    return error != "Time out"
+    return error == ""
 
 
 def run_z3(script, benchmark, size, csv):
@@ -122,7 +122,7 @@ def run_z3(script, benchmark, size, csv):
     print(f"Total time taken: {end_time} seconds")
 
     write_result(csv, benchmark.name, size, "z3", end_time, error)
-    return error != "Time out"
+    return error == ""
 
 def run_cvc5(script, benchmark, size, csv):
     print("running cvc5")
@@ -161,4 +161,4 @@ def run_cvc5(script, benchmark, size, csv):
     print(f"Total time taken: {end_time} seconds")
 
     write_result(csv, benchmark.name, size, "cvc5", end_time, error)
-    return error != "Time out"
+    return error == ""

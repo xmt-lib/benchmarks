@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "sat"
 
-def generate(size=250):
+def smt(size=250):
     edge = [(i, j) for x in range(0, size) for i, j in [(x, x+1), (x, x+2)] if j < size]
     p = [(i, i+1, i+2) for i in range(0, size) if i+2 < size]
 
@@ -43,4 +43,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

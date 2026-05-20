@@ -5,7 +5,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "LIA"
 result = "unsat"
 
-def generate(size=200000):
+def smt(size=200000):
     prng = Random(f"{id}{size}")
 
     ps = []
@@ -45,4 +45,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

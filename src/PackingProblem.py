@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "sat"
 
-def generate(file_path="src/PackingProblem-45-0-0.asp"):
+def smt(file_path="src/PackingProblem-45-0-0.asp"):
     with open(file_path) as fd:
         file_str = fd.read()
     square: list[tuple[int, int]] = list()
@@ -71,43 +71,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-
-    xmt = f"""    (set-option :backend Z3)
-
-    (declare-datatype Square ( {squares_str} ))
-
-    (declare-fun pos_x (Square) Int)
-    (declare-fun pos_y (Square) Int)
-    (declare-fun square_size (Square) Int)
-    (declare-fun area_width () Int)
-    (declare-fun area_height () Int)
-
-    (assert (forall ((s Square)) (<= 0 (pos_x s))))
-    (assert (forall ((s Square)) (<= 0 (pos_y s))))
-    (assert (forall ((s Square)) (<= (+ (pos_x s) (square_size s)) area_width)))
-    (assert (forall ((s Square)) (<= (+ (pos_y s) (square_size s)) area_height)))
-
-    (assert (forall ((s1 Square) (s2 Square))
-                    (not (and (not (= s1 s2))
-
-                            (<= (pos_x s1) (pos_x s2))
-                            (<= (pos_y s1) (pos_y s2))
-
-                            (< (pos_x s2) (+ (pos_x s1) (square_size s1)))
-                            (< (pos_x s1) (+ (pos_x s2) (square_size s2)))
-                            (< (pos_y s2) (+ (pos_y s1) (square_size s1)))
-                            (< (pos_y s1) (+ (pos_y s2) (square_size s2)))
-
-                            (<= (+ (pos_x s2) (square_size s2)) (+ (pos_x s1) (square_size s1)))
-                            (<= (+ (pos_y s2) (square_size s2)) (+ (pos_y s1) (square_size s1)))
-                        )
-                )))
-
-    (x-interpret-const area_width {area[0]})
-    (x-interpret-const area_height {area[1]})
-
-    (x-interpret-fun square_size (x-mapping {mapping_str} ))
-
-    (check-sat)
-"""
-    return smt, xmt
+    return smt

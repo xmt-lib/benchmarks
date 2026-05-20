@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "unsat"
 
-def generate(file_path="src/NonPartition_1000_2_7.asp"):
+def smt(file_path="src/NonPartition_1000_2_7.asp"):
     with open(file_path) as fd:
         file_str = fd.read()
     vertex = list()
@@ -59,4 +59,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

@@ -60,12 +60,11 @@ def main():
                     print(f"Running benchmark: {benchmark.name} | Solver: {solver_name} | Size: {size}")
                     print(f"========================================")
 
-                    # Generate the SMT/XMT scripts with current size
-                    smt, xmt = benchmark.generate(size)
+                    # Generate the SMT scripts with current size
+                    smt = benchmark.smt(size)
 
                     # Execute solver run
-                    script = xmt if solver == run_xmt else smt
-                    success = solver(script, benchmark, size, csv="coloring.csv")
+                    success = solver(smt, benchmark, size, csv="coloring.csv")
 
                     if not success:
                         print(f"Solver {solver_name} timed out for {benchmark.name} at size {size}. Stopping size loop.")
@@ -92,16 +91,16 @@ def main():
             print(f"Running benchmark: {benchmark.name}")
             print(f"========================================")
 
-            # Generate the SMT/XMT scripts with default parameters
-            smt, xmt = benchmark.generate()
-            sig = inspect.signature(benchmark.generate)
+            # Generate the SMT scripts with default parameters
+            smt = benchmark.smt()
+            sig = inspect.signature(benchmark.smt)
             first_param = list(sig.parameters.values())[0]
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
             run_z3(smt, benchmark, size, csv="smt.csv")
             run_cvc5(smt, benchmark, size, csv="smt.csv")
-            run_xmt(xmt, benchmark, size, csv="smt.csv")
+            run_xmt(smt, benchmark, size, csv="smt.csv")
     elif args.asp:
         print("Option --asp is not defined yet.")
 

@@ -5,7 +5,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "unsat"
 
-def generate(size=2500, density=0.01):
+def smt(size=2500, density=0.01):
     prng = Random(f"GraphColoring-{size}-{density}")
     graph = [(int((number) / size + 1), number % size + 1)
         for number in prng.sample(range(size * size), int(size * size * density))]
@@ -45,4 +45,4 @@ From the DIRT benchmark used to evaluate grounders
 )
 (check-sat)
 """
-    return smt, smt
+    return smt

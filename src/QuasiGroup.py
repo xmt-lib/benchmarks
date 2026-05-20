@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def generate(file_path="src/QuasiGroup-d_50-p_60.asp"):
+def smt(file_path="src/QuasiGroup-d_50-p_60.asp"):
     with open(file_path) as fd:
         file_str = fd.read()
 
@@ -79,4 +79,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

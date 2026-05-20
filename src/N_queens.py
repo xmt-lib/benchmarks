@@ -5,7 +5,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def generate(n=37):
+def smt(n=37):
     val_expr = "\n  ".join([f'(= x {i})' for i in range(1, n+1)])
 
     smt = f"""(set-info :smt-lib-version 2.6)
@@ -45,4 +45,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

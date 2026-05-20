@@ -5,7 +5,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "DTLIA"
 result = "sat"
 
-def generate(size=200000):
+def smt(size=200000):
     prng = Random(f"{id}{size}")
 
     elems = [f'a{i}' for i in range(0, size)]
@@ -48,4 +48,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

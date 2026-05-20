@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "LIA"
 result = "sat"
 
-def generate(number=21):
+def smt(number=21):
     smt = f"""(set-info :smt-lib-version 2.6)
 (set-logic {logic})
 (set-info :source |
@@ -57,4 +57,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-    return smt, smt
+    return smt

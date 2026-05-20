@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def generate(file_path="src/PPM-0007-200-0.asp"):
+def smt(file_path="src/PPM-0007-200-0.asp"):
     with open(file_path) as fd:
         file_str = fd.read()
     t: list[tuple[int, int]] = list()
@@ -89,57 +89,4 @@ From the DIRT benchmark used to evaluate grounders
 
 (check-sat)
 """
-
-    xmt = f"""    (set-option :backend Z3)
-
-    (declare-fun number (Int) Bool)
-    (x-interpret-pred number (x-range 1 {max_number} ))
-
-    (declare-fun smallnumber (Int) Bool)
-    (x-interpret-pred smallnumber (x-range 1 {patternlength} ))
-
-    (declare-fun patternlengthf () Int)
-    (declare-fun pf (Int) Int)
-    (declare-fun solution (Int) Int)
-    (declare-fun solutionindex (Int) Int)
-    (declare-fun tf (Int) Int)
-
-    ; co-domain
-    (assert (forall ((x Int)) (=> (smallnumber x) (number (pf x)))))
-    (assert (forall ((x Int)) (=> (smallnumber x) (number (solution x)))))
-    (assert (forall ((x Int)) (=> (smallnumber x) (number (solutionindex x)))))
-    (assert (forall ((x Int)) (=> (number x) (number (tf x)))))
-
-    ; ! SN1, SN2 in smallnumber: (~(SN1  <  SN2) | (solutionindex(SN1)  <  solutionindex(SN2)))
-    (assert (forall ((SN1 Int) (SN2 Int))
-                (=> (and (smallnumber SN1) (smallnumber SN2))
-                    (or (not (< SN1 SN2))
-                        (< (solutionindex SN1) (solutionindex SN2)))
-                )))
-
-    ; ! SN1, N2 in smallnumber: (~(pf(SN1)  <  pf(SN2)) | (solution(SN1)  <  solution(SN2)))
-    (assert (forall ((SN1 Int) (SN2 Int))
-                (=> (and (smallnumber SN1) (smallnumber SN2))
-                    (or (not (< (pf SN1) (pf SN2)))
-                        (< (solution SN1) (solution SN2)))
-                )))
-
-    ; ! X in smallnumber, y in number: y = solutionindex(X) => (tf(y)  =  solution(X))
-    (assert (forall ((X Int) (y Int))
-                (=> (and (smallnumber X) (smallnumber y))
-                    (=> (= y (solutionindex X))
-                        (= (tf y) (solution X))
-                    ))))
-
-    (x-interpret-const patternlengthf {patternlength})
-    (x-interpret-fun pf (x-mapping
-        {p_mapping}
-        ))
-
-    (x-interpret-fun tf (x-mapping
-        {t_mapping}
-        ))
-
-    (check-sat)
-"""
-    return smt, xmt
+    return smt

@@ -8,6 +8,10 @@ import src.GraphColoring.int_assert
 import src.GraphColoring.datatype_define
 import src.GraphColoring.datatype_assert
 import src.GraphColoring.grounded
+import src.GraphColoring.int_define_no_eq
+import src.GraphColoring.int_assert_no_eq
+import src.GraphColoring.datatype_define_no_eq
+import src.GraphColoring.datatype_assert_no_eq
 import src.N_queens
 import src.NonPartitionRemovalColoring
 import src.PackingProblem
@@ -40,7 +44,15 @@ def main():
 
         solvers = [run_z3, run_xmt]  # , run_cvc5
         for solver in solvers:
-            for benchmark in benchmarks:
+            solver_benchmarks = benchmarks.copy()
+            if solver == run_z3:
+                solver_benchmarks.extend([
+                    src.GraphColoring.int_define_no_eq,
+                    src.GraphColoring.datatype_define_no_eq,
+                    src.GraphColoring.int_assert_no_eq,
+                    src.GraphColoring.datatype_assert_no_eq,
+                ])
+            for benchmark in solver_benchmarks:
                 size = 50
                 while size <= 1000:
                     solver_name = solver.__name__.replace("run_", "")

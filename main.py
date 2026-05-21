@@ -24,14 +24,15 @@ def main():
     parser = argparse.ArgumentParser(description="Benchmark Runner CLI")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
-    group.add_argument("--smt", action="store_true", help="Run SMT benchmarks (default)")
+    group.add_argument("--smt", action="store_true", help="Find SMT benchmarks")
+    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
     group.add_argument("--asp", action="store_true", help="Run ASP benchmarks")
 
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
     if not (args.coloring or args.smt or args.asp):
-        args.coloring = True
+        # args.coloring = True
         args.smt = True
 
     if args.coloring:
@@ -75,6 +76,22 @@ def main():
                     plot_coloring_results()
 
     if args.smt:
+        import urllib.request
+        import json
+        url = "https://zenodo.org/api/records/16740866"
+        try:
+            with urllib.request.urlopen(url) as response:
+                data = json.loads(response.read().decode())
+                for file_info in data.get("files", []):
+                    name = file_info.get("key", "")
+                    if name.endswith(".tar.zst"):
+                        if not any(x in name for x in ("QF", "BV", "NIA", "FP")) and not name.startswith("A"):
+                            download_url = file_info.get("links", {}).get("self", "")
+                            find_benchmarks(name, download_url)
+        except Exception as e:
+            print(f"Error fetching benchmarks: {e}")
+
+    if args.dirt:
         benchmarks = [
             src.CommonItems,
             src.CompleteSets,
@@ -166,6 +183,72 @@ def plot_coloring_results(csv_path="coloring.csv", output_path="coloring.png"):
     plt.savefig(output_path, dpi=300)
     plt.close()
     print(f"Generated plot saved to {output_path}")
+
+def find_benchmarks(name, download_url):
+    import urllib.request
+    import os
+    import subprocess
+    import shutil
+    import tempfile
+    import resource
+
+    GB = 1024 * 1024 * 1024
+    MEMORY_LIMIT = 10 * GB
+
+    def limit_memory():
+        resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
+
+    print(f"Downloading {name}...")
+    try:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            archive_path = os.path.join(temp_dir, name)
+            urllib.request.urlretrieve(download_url, archive_path)
+
+            temp_extract_dir = os.path.join(temp_dir, "extract")
+            os.makedirs(temp_extract_dir, exist_ok=True)
+
+            print(f"Extracting {name}...")
+            subprocess.run(
+                ["tar", "--zstd", "-xf", archive_path, "-C", temp_extract_dir],
+                check=True
+            )
+
+            # Find and check all files in the extracted directory
+            for root, _, files in os.walk(temp_extract_dir):
+                for file in files:
+                    if file.startswith(".") or not file.endswith(".smt2"):
+                        continue
+
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(full_path, temp_extract_dir)
+
+                    try:
+                        res = subprocess.run(
+                            ["../xmtcom/target/release/check", full_path],
+                            capture_output=True,
+                            text=True,
+                            preexec_fn=limit_memory
+                        )
+                        stdout = res.stdout
+                        has_error = (res.returncode != 0)
+                        can_benefit = "This file can benefit from xmt-lib." in stdout
+
+                        if has_error or can_benefit:
+                            print(f"Found match: {rel_path}")
+                            last_10 = "\n".join(stdout.splitlines()[-10:])
+                            # one folder up to avoid git diffs
+                            with open("../smt-lib.md", "a") as md_file:
+                                md_file.write(f"# {rel_path}\n{last_10}\n")
+
+                            # Write the .smt2 file to the Downloads/SMT-LIB directory
+                            dest_dir = os.path.expanduser("~/Downloads/SMT-LIB")
+                            os.makedirs(dest_dir, exist_ok=True)
+                            dest_file = os.path.join(dest_dir, os.path.basename(rel_path))
+                            shutil.copy2(full_path, dest_file)
+                    except Exception as e:
+                        print(f"Error checking file {rel_path}: {e}")
+    except Exception as e:
+        print(f"Error processing {name}: {e}")
 
 if __name__ == "__main__":
     main()

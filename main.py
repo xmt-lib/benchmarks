@@ -32,6 +32,7 @@ def main():
     # Default to --smt if no option is selected
     if not (args.coloring or args.smt or args.asp):
         args.coloring = True
+        args.smt = True
 
     if args.coloring:
         benchmarks = [
@@ -42,7 +43,7 @@ def main():
             src.GraphColoring.grounded,
         ]
 
-        solvers = [run_z3, run_xmt]  # , run_cvc5
+        solvers = [run_z3, run_xmt, run_cvc5]  #
         for solver in solvers:
             solver_benchmarks = benchmarks.copy()
             if solver == run_z3:
@@ -54,7 +55,7 @@ def main():
                 ])
             for benchmark in solver_benchmarks:
                 size = 50
-                while size <= 1000:
+                while size <= 3000:
                     solver_name = solver.__name__.replace("run_", "")
                     print(f"========================================")
                     print(f"Running benchmark: {benchmark.name} | Solver: {solver_name} | Size: {size}")
@@ -72,7 +73,8 @@ def main():
 
                     size = int(size * 1.2)
                     plot_coloring_results()
-    elif args.smt:
+
+    if args.smt:
         benchmarks = [
             src.CommonItems,
             src.CompleteSets,
@@ -101,7 +103,8 @@ def main():
             run_z3(smt, benchmark, size, csv="smt.csv")
             run_cvc5(smt, benchmark, size, csv="smt.csv")
             run_xmt(smt, benchmark, size, csv="smt.csv")
-    elif args.asp:
+
+    if args.asp:
         print("Option --asp is not defined yet.")
 
 def plot_coloring_results(csv_path="coloring.csv", output_path="coloring.png"):

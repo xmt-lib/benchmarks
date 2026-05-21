@@ -8,8 +8,9 @@ from datetime import datetime
 
 TIMEOUT = 300  # seconds
 GB = 1024 * 1024 * 1024
-MEMORY_LIMIT = 5 * GB
-WRITE = False
+MEMORY_LIMIT = 10 * GB
+
+WRITE = True
 
 print(subprocess.check_output(["z3", "--version"], text=True))
 
@@ -77,7 +78,7 @@ def run_z3(script, benchmark, size, csv):
             "benchmark-submission",
             "non-incremental",
             benchmark.logic,
-            "2026-05-20-Grounders"
+            "2026-05-21-Grounders"
         )
         os.makedirs(output_dir, exist_ok=True)
 

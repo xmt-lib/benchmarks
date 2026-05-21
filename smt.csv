@@ -5,9 +5,9 @@ CommonItems,200000,xmt,0.6306,,2026-05-21T10:57:32.802072
 CompleteSets,200000,z3,300.2578,Time out,2026-05-21T11:02:33.204261
 CompleteSets,200000,cvc5,300.2791,Time out,2026-05-21T11:07:33.483564
 CompleteSets,200000,xmt,2.8158,,2026-05-21T11:07:36.302247
-int_define,2500,z3,74.0458,"stderr : (error ""out of memory"")",2026-05-21T11:08:50.452485
-int_define,2500,cvc5,300.1327,Time out,2026-05-21T11:13:50.585415
-int_define,2500,xmt,0.6736,,2026-05-21T11:13:51.260375
+GraphColoring,2500,z3,74.0458,"stderr : (error ""out of memory"")",2026-05-21T11:08:50.452485
+GraphColoring,2500,cvc5,300.1327,Time out,2026-05-21T11:13:50.585415
+GraphColoring,2500,xmt,0.6736,,2026-05-21T11:13:51.260375
 N_queens,37,z3,4.4161,,2026-05-21T11:13:55.689105
 N_queens,37,cvc5,0.0269,stderr : Incorrect: unknown,2026-05-21T11:13:55.716311
 N_queens,37,xmt,2.2466,,2026-05-21T11:13:57.963495

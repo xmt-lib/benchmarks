@@ -44,5 +44,6 @@ From the DIRT benchmark used to evaluate grounders
                 (not (= (- (queen v1) v1) (- (queen v2) v2))))))
 
 (check-sat)
+(exit)
 """
     return smt

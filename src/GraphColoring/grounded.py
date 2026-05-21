@@ -32,5 +32,6 @@ From the DIRT benchmark used to evaluate grounders
 (declare-fun colorOf (Int) Color)
 {assertions}
 (check-sat)
+(exit)
 """
     return smt

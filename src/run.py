@@ -78,7 +78,7 @@ def run_z3(script, benchmark, size, csv):
             "benchmark-submission",
             "non-incremental",
             benchmark.logic,
-            "2026-05-21-Grounders"
+            "20260521-Grounders"
         )
         os.makedirs(output_dir, exist_ok=True)
 

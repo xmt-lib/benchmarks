@@ -3,7 +3,7 @@ import inspect
 from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT
 import src.CommonItems
 import src.CompleteSets
-import src.GraphColoring.int_define
+import src.GraphColoring.GraphColoring
 import src.GraphColoring.int_assert
 import src.GraphColoring.datatype_define
 import src.GraphColoring.datatype_assert
@@ -36,7 +36,7 @@ def main():
 
     if args.coloring:
         benchmarks = [
-            src.GraphColoring.int_define,
+            src.GraphColoring.GraphColoring,
             src.GraphColoring.datatype_define,
             src.GraphColoring.int_assert,
             src.GraphColoring.datatype_assert,
@@ -78,7 +78,7 @@ def main():
         benchmarks = [
             src.CommonItems,
             src.CompleteSets,
-            src.GraphColoring.int_define,
+            src.GraphColoring.GraphColoring,
             src.N_queens,
             src.NonPartitionRemovalColoring,
             src.PackingProblem,

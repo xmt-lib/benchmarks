@@ -47,5 +47,6 @@ From the DIRT benchmark used to evaluate grounders
 (assert (forall ((x Domain)) (or (p x) (q x))))
 
 (check-sat)
+(exit)
 """
     return smt

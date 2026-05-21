@@ -88,5 +88,6 @@ From the DIRT benchmark used to evaluate grounders
 (assert (= patternlengthf {patternlength}))
 
 (check-sat)
+(exit)
 """
     return smt

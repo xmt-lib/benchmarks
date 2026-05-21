@@ -28,6 +28,7 @@ From the DIRT benchmark used to evaluate grounders
 (set-info :category "random")
 (set-info :status {result})
 
+(set-option :smt.auto-config false)
 (set-option :smt.ematching false)
 
 (declare-datatype Color ((red) (blue) (green) (orange) (purple)))

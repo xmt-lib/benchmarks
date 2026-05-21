@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def smt(file_path="src/PPM-0007-200-0.asp"):
+def smt(file_path="src/PPM-0045-350-0.asp"):
     with open(file_path) as fd:
         file_str = fd.read()
     t: list[tuple[int, int]] = list()

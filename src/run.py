@@ -6,7 +6,7 @@ import resource
 import csv
 from datetime import datetime
 
-TIMEOUT = 20  # seconds
+TIMEOUT = 300  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 5 * GB
 WRITE = False

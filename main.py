@@ -24,14 +24,15 @@ def main():
     parser = argparse.ArgumentParser(description="Benchmark Runner CLI")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
-    group.add_argument("--smt", action="store_true", help="Find SMT benchmarks")
+    group.add_argument("--find", action="store_true", help="Find SMT benchmarks")
+    group.add_argument("--smt", action="store_true", help="Run SMT benchmarks")
     group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
     group.add_argument("--asp", action="store_true", help="Run ASP benchmarks")
 
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
-    if not (args.coloring or args.smt or args.asp):
+    if not (args.coloring or args.find or args.dirt or args.asp):
         # args.coloring = True
         args.smt = True
 
@@ -75,7 +76,7 @@ def main():
                     size = int(size * 1.2)
                     plot_coloring_results()
 
-    if args.smt:
+    if args.find:
         import urllib.request
         import json
         url = "https://zenodo.org/api/records/16740866"
@@ -90,6 +91,46 @@ def main():
                             find_benchmarks(name, download_url)
         except Exception as e:
             print(f"Error fetching benchmarks: {e}")
+
+    if args.smt:
+        import os
+        import glob
+        import re
+
+        smt_dir = os.path.expanduser("~/Downloads/SMT-LIB")
+        smt_files = sorted(glob.glob(os.path.join(smt_dir, "*.smt2")))
+
+        selected_files = smt_files  #[:5]
+        print(f"Selected SMT files: {selected_files}")
+
+        for file_path in selected_files:
+            file_name = os.path.basename(file_path)
+            benchmark_name = os.path.splitext(file_name)[0]
+
+            with open(file_path, "r", encoding="utf-8") as f:
+                script = f.read()
+
+            logic_match = re.search(r"\(set-logic\s+([^\s\)]+)\)", script)
+            logic = logic_match.group(1) if logic_match else "ALL"
+
+            status_match = re.search(r"\(set-info\s+:status\s+(\w+)\)", script)
+            result = status_match.group(1) if status_match else ""
+
+            class MockBenchmark:
+                def __init__(self, name, logic, result):
+                    self.name = name
+                    self.logic = logic
+                    self.result = result
+
+            bench = MockBenchmark(benchmark_name, logic, result)
+
+            print(f"========================================")
+            print(f"Running SMT benchmark: {benchmark_name}")
+            print(f"========================================")
+
+            csv_file = "Result_smt.csv"
+            run_z3(script, bench, 1, csv=csv_file)
+            run_xmt(script, bench, 1, csv=csv_file)
 
     if args.dirt:
         benchmarks = [
@@ -117,14 +158,14 @@ def main():
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            run_z3(smt, benchmark, size, csv="smt.csv")
-            run_cvc5(smt, benchmark, size, csv="smt.csv")
-            run_xmt(smt, benchmark, size, csv="smt.csv")
+            run_z3(smt, benchmark, size, csv="Result_dirt.csv")
+            run_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
+            run_xmt(smt, benchmark, size, csv="Result_dirt.csv")
 
     if args.asp:
         print("Option --asp is not defined yet.")
 
-def plot_coloring_results(csv_path="coloring.csv", output_path="coloring.png"):
+def plot_coloring_results(csv_path="Result_coloring.csv", output_path="Result_coloring.png"):
     import os
     import csv
     import matplotlib

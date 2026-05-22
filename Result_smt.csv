@@ -1,0 +1,49 @@
+name,size,solver,solve time,error,run date
+J506-016__scaled_value__spark-arithmetic_lemmas.ads_123_38_spark-long_integer_arithmetic_lemmas.ads_31_1_division_check___00,1,z3,0.0161,,2026-05-22T10:36:59.732449
+J506-016__scaled_value__spark-arithmetic_lemmas.ads_123_38_spark-long_integer_arithmetic_lemmas.ads_31_1_division_check___00,1,xmt,0.0218,,2026-05-22T10:36:59.754879
+JC17-017__exit__p.adb_17_7_assert___00,1,z3,0.0176,stderr : Incorrect: sat,2026-05-22T10:36:59.773143
+JC17-017__exit__p.adb_17_7_assert___00,1,xmt,0.0204,stderr : Incorrect: sat,2026-05-22T10:36:59.794069
+JC17-017__expr_fun__p.adb_12_19_postcondition___00,1,z3,0.0133,,2026-05-22T10:36:59.808002
+JC17-017__expr_fun__p.adb_12_19_postcondition___00,1,xmt,0.0172,,2026-05-22T10:36:59.825572
+JC17-017__expr_fun__p.adb_22_22_postcondition___00,1,z3,0.0129,,2026-05-22T10:36:59.838985
+JC17-017__expr_fun__p.adb_22_22_postcondition___00,1,xmt,0.0179,,2026-05-22T10:36:59.857273
+JC17-017__expr_fun__p.adb_32_22_assert___00,1,z3,0.0142,,2026-05-22T10:36:59.872084
+JC17-017__expr_fun__p.adb_32_22_assert___00,1,xmt,0.0184,,2026-05-22T10:36:59.890915
+JC17-017__expr_fun__p.adb_34_22_assert___00,1,z3,0.0134,,2026-05-22T10:36:59.904834
+JC17-017__expr_fun__p.adb_34_22_assert___00,1,xmt,0.0178,,2026-05-22T10:36:59.923093
+JC17-017__expr_fun__p.adb_36_22_assert___00,1,z3,0.0136,,2026-05-22T10:36:59.937290
+JC17-017__expr_fun__p.adb_36_22_assert___00,1,xmt,0.0180,,2026-05-22T10:36:59.955656
+JC17-017__expr_fun__p.adb_38_22_assert___00,1,z3,0.0137,,2026-05-22T10:36:59.969953
+JC17-017__expr_fun__p.adb_38_22_assert___00,1,xmt,0.0208,,2026-05-22T10:36:59.991083
+JC17-017__expr_fun__p.ads_14_19_postcondition___00,1,z3,0.0145,,2026-05-22T10:37:00.006228
+JC17-017__expr_fun__p.ads_14_19_postcondition___00,1,xmt,0.0173,,2026-05-22T10:37:00.024110
+JC17-017__expr_fun__p.ads_9_19_postcondition___00,1,z3,0.0129,,2026-05-22T10:37:00.037581
+JC17-017__expr_fun__p.ads_9_19_postcondition___00,1,xmt,0.0176,,2026-05-22T10:37:00.055481
+JC17-017__library__p.adb_3_19_assert___00,1,z3,0.0153,,2026-05-22T10:37:00.071463
+JC17-017__library__p.adb_3_19_assert___00,1,xmt,0.0188,,2026-05-22T10:37:00.090803
+JC17-017__library__p.adb_3_21_overflow_check___00,1,z3,0.0168,stderr : Incorrect: sat,2026-05-22T10:37:00.108184
+JC17-017__library__p.adb_3_21_overflow_check___00,1,xmt,0.0206,stderr : Incorrect: sat,2026-05-22T10:37:00.129327
+JC17-017__pre_guarded__p.ads_10_31_overflow_check___00,1,z3,60.0223,Time out,2026-05-22T10:38:00.152318
+JC17-017__pre_guarded__p.ads_10_31_overflow_check___00,1,xmt,0.0282,stderr : Incorrect: unsat,2026-05-22T10:38:00.180896
+JC17-017__pre_guarded__p.ads_13_15_division_check___00,1,z3,0.0285,,2026-05-22T10:38:00.218442
+JC17-017__pre_guarded__p.ads_13_15_division_check___00,1,xmt,0.0221,,2026-05-22T10:38:00.241175
+JC17-017__pre_guarded__p.ads_4_15_division_check___00,1,z3,60.0427,Time out,2026-05-22T10:39:00.284399
+JC17-017__pre_guarded__p.ads_4_15_division_check___00,1,xmt,60.0553,Time out,2026-05-22T10:40:00.340145
+JC17-017__pre_guarded__p.ads_4_15_overflow_check___00,1,z3,60.0648,Time out,2026-05-22T10:41:00.406732
+JC17-017__pre_guarded__p.ads_4_15_overflow_check___00,1,xmt,60.0652,Time out,2026-05-22T10:42:00.472325
+JC17-017__pre_guarded__p.ads_7_31_overflow_check___00,1,z3,60.0647,Time out,2026-05-22T10:43:00.537531
+JC17-017__pre_guarded__p.ads_7_31_overflow_check___00,1,xmt,0.0240,stderr : Incorrect: unsat,2026-05-22T10:43:00.562042
+JC17-017__prepost__p.adb_9_15_overflow_check___00,1,z3,0.0174,stderr : Incorrect: sat,2026-05-22T10:43:00.590818
+JC17-017__prepost__p.adb_9_15_overflow_check___00,1,xmt,0.0206,stderr : Incorrect: sat,2026-05-22T10:43:00.611779
+JC17-017__prepost__p.ads_11_54_overflow_check___00,1,z3,0.0205,stderr : Incorrect: sat,2026-05-22T10:43:00.632972
+JC17-017__prepost__p.ads_11_54_overflow_check___00,1,xmt,0.0183,stderr : Incorrect: unsat,2026-05-22T10:43:00.651641
+JC17-017__prepost__p.ads_16_54_overflow_check___00,1,z3,0.0204,stderr : Incorrect: sat,2026-05-22T10:43:00.672632
+JC17-017__prepost__p.ads_16_54_overflow_check___00,1,xmt,0.0199,stderr : Incorrect: sat,2026-05-22T10:43:00.693020
+JC17-017__prepost__p.ads_3_27_overflow_check___00,1,z3,0.0185,stderr : Incorrect: sat,2026-05-22T10:43:00.713184
+JC17-017__prepost__p.ads_3_27_overflow_check___00,1,xmt,0.0196,stderr : Incorrect: sat,2026-05-22T10:43:00.733216
+JC17-017__prepost__p.ads_9_27_overflow_check___00,1,z3,0.0170,stderr : Incorrect: sat,2026-05-22T10:43:00.750686
+JC17-017__prepost__p.ads_9_27_overflow_check___00,1,xmt,0.0188,stderr : Incorrect: sat,2026-05-22T10:43:00.769878
+JC17-017__return__p.adb_4_19_postcondition___00,1,z3,0.0134,,2026-05-22T10:43:00.784337
+JC17-017__return__p.adb_4_19_postcondition___00,1,xmt,0.0172,,2026-05-22T10:43:00.801853
+JC17-017__return__p.adb_4_29_overflow_check___00,1,z3,0.0142,,2026-05-22T10:43:00.816589
+JC17-017__return__p.adb_4_29_overflow_check___00,1,xmt,0.0207,,2026-05-22T10:43:00.837657

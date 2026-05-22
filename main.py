@@ -32,9 +32,8 @@ def main():
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
-    if not (args.coloring or args.find or args.dirt or args.asp):
-        # args.coloring = True
-        args.smt = True
+    if not (args.coloring or args.find or args.smt or args.dirt or args.asp):
+        args.find = True
 
     if args.coloring:
         benchmarks = [
@@ -77,6 +76,8 @@ def main():
                     plot_coloring_results()
 
     if args.find:
+        src.run.TIMEOUT = 20
+        src.run.MEMORY_LIMIT = 5 * src.run.GB
         import urllib.request
         import json
         url = "https://zenodo.org/api/records/16740866"
@@ -232,6 +233,7 @@ def find_benchmarks(name, download_url):
     import shutil
     import tempfile
     import resource
+    import random
 
     GB = 1024 * 1024 * 1024
     MEMORY_LIMIT = 10 * GB
@@ -254,12 +256,12 @@ def find_benchmarks(name, download_url):
                 check=True
             )
 
-            # Find and check all files in the extracted directory
+            # check files in each folder
             for root, _, files in os.walk(temp_extract_dir):
-                for file in files:
-                    if file.startswith(".") or not file.endswith(".smt2"):
-                        continue
+                smt_files = [f for f in files if not f.startswith(".") and f.endswith(".smt2")]
 
+                can_benefit_files = []
+                for file in smt_files:
                     full_path = os.path.join(root, file)
                     rel_path = os.path.relpath(full_path, temp_extract_dir)
 
@@ -274,20 +276,40 @@ def find_benchmarks(name, download_url):
                         has_error = (res.returncode != 0)
                         can_benefit = "This file can benefit from xmt-lib." in stdout
 
-                        if has_error or can_benefit:
-                            print(f"Found match: {rel_path}")
+                        if has_error:
+                            print(f"Found error: {rel_path}")
                             last_10 = "\n".join(stdout.splitlines()[-10:])
-                            # one folder up to avoid git diffs
-                            with open("../smt-lib.md", "a") as md_file:
+                            # write to error.md one folder up
+                            with open("../error.md", "a") as md_file:
                                 md_file.write(f"# {rel_path}\n{last_10}\n")
 
-                            # Write the .smt2 file to the Downloads/SMT-LIB directory
-                            dest_dir = os.path.expanduser("~/Downloads/SMT-LIB")
+                            # copy to ~/Downloads/Errors
+                            dest_dir = os.path.expanduser("~/Downloads/Errors")
                             os.makedirs(dest_dir, exist_ok=True)
                             dest_file = os.path.join(dest_dir, os.path.basename(rel_path))
                             shutil.copy2(full_path, dest_file)
+
+                        elif can_benefit:
+                            can_benefit_files.append((full_path, rel_path, stdout))
+
                     except Exception as e:
                         print(f"Error checking file {rel_path}: {e}")
+
+                if can_benefit_files:
+                    selected_benefit = can_benefit_files
+                    if len(selected_benefit) > 5:
+                        selected_benefit = random.sample(selected_benefit, 5)
+                    for full_path, rel_path, stdout in selected_benefit:
+                        print(f"Found match (benefit): {rel_path}")
+                        last_10 = "\n".join(stdout.splitlines()[-10:])
+                        with open("../smt-lib.md", "a") as md_file:
+                            md_file.write(f"# {rel_path}\n{last_10}\n")
+
+                        # Write the .smt2 file to the Downloads/SMT-LIB directory
+                        dest_dir = os.path.expanduser("~/Downloads/SMT-LIB")
+                        os.makedirs(dest_dir, exist_ok=True)
+                        dest_file = os.path.join(dest_dir, os.path.basename(rel_path))
+                        shutil.copy2(full_path, dest_file)
     except Exception as e:
         print(f"Error processing {name}: {e}")
 

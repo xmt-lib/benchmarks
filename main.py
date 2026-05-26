@@ -279,8 +279,8 @@ def find_benchmarks(name, download_url):
                         if has_error:
                             print(f"Found error: {rel_path}")
                             last_10 = "\n".join(stdout.splitlines()[-10:])
-                            # write to error.md one folder up
-                            with open("../error.md", "a") as md_file:
+                            # write to error.md
+                            with open("error.md", "a") as md_file:
                                 md_file.write(f"# {rel_path}\n{last_10}\n")
 
                             # copy to ~/Downloads/Errors
@@ -302,7 +302,7 @@ def find_benchmarks(name, download_url):
                     for full_path, rel_path, stdout in selected_benefit:
                         print(f"Found match (benefit): {rel_path}")
                         last_10 = "\n".join(stdout.splitlines()[-10:])
-                        with open("../smt-lib.md", "a") as md_file:
+                        with open("smt-lib.md", "a") as md_file:
                             md_file.write(f"# {rel_path}\n{last_10}\n")
 
                         # Write the .smt2 file to the Downloads/SMT-LIB directory

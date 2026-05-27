@@ -1,5 +1,7 @@
 import argparse
 import inspect
+import random
+random.seed(0)
 from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT
 import src.CommonItems
 import src.CompleteSets
@@ -76,6 +78,22 @@ def main():
                     plot_coloring_results()
 
     if args.find:
+        import os
+        import shutil
+        for f in ["error.md", "smt-lib.md"]:
+            if os.path.exists(f):
+                try:
+                    os.remove(f)
+                except Exception as e:
+                    print(f"Error removing {f}: {e}")
+        for d in ["~/Downloads/Errors", "~/Downloads/SMT-LIB"]:
+            expanded = os.path.expanduser(d)
+            if os.path.exists(expanded):
+                try:
+                    shutil.rmtree(expanded)
+                except Exception as e:
+                    print(f"Error removing directory {d}: {e}")
+
         src.run.TIMEOUT = 20
         src.run.MEMORY_LIMIT = 5 * src.run.GB
         import urllib.request
@@ -234,6 +252,7 @@ def find_benchmarks(name, download_url):
     import tempfile
     import resource
     import random
+    random.seed(0)
 
     GB = 1024 * 1024 * 1024
     MEMORY_LIMIT = 10 * GB

@@ -8,7 +8,7 @@ from datetime import datetime
 
 TIMEOUT = 60  # seconds
 GB = 1024 * 1024 * 1024
-MEMORY_LIMIT = 10 * GB
+MEMORY_LIMIT = 4 * GB
 
 WRITE = False
 

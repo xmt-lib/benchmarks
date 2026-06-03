@@ -27,6 +27,7 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
     group.add_argument("--find", action="store_true", help="Find SMT benchmarks")
+    group.add_argument("--findQF", action="store_true", help="Find QF SMT benchmarks")
     group.add_argument("--smt", action="store_true", help="Run SMT benchmarks")
     group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
     group.add_argument("--asp", action="store_true", help="Run ASP benchmarks")
@@ -35,7 +36,7 @@ def main():
 
     # Default to --smt if no option is selected
     if not (args.coloring or args.find or args.smt or args.dirt or args.asp):
-        args.find = True
+        args.findQF = True
 
     if args.coloring:
         benchmarks = [
@@ -77,7 +78,7 @@ def main():
                     size = int(size * 1.2)
                     plot_coloring_results()
 
-    if args.find:
+    if args.find or args.findQF:
         import os
         import shutil
         for f in ["error.md", "smt-lib.md"]:
@@ -104,10 +105,12 @@ def main():
                 data = json.loads(response.read().decode())
                 for file_info in data.get("files", []):
                     name = file_info.get("key", "")
+                    download_url = file_info.get("links", {}).get("self", "")
                     if name.endswith(".tar.zst"):
-                        if not any(x in name for x in ("QF", "BV", "NIA", "FP")) and not name.startswith("A"):
-                            download_url = file_info.get("links", {}).get("self", "")
-                            find_benchmarks(name, download_url)
+                        if args.find and not any(x in name for x in ("QF", "BV", "NIA", "FP")) and not name.startswith("A"):
+                            find_benchmarks(name, download_url, False)
+                        if args.findQF and "QF" in name and not any(x in name for x in ("BV", "NIA", "FP")) and not name.startswith("A"):
+                            find_benchmarks(name, download_url, True)
         except Exception as e:
             print(f"Error fetching benchmarks: {e}")
 
@@ -244,7 +247,7 @@ def plot_coloring_results(csv_path="Result_coloring.csv", output_path="Result_co
     plt.close()
     print(f"Generated plot saved to {output_path}")
 
-def find_benchmarks(name, download_url):
+def find_benchmarks(name, download_url, qf, folder_timeout=300):
     import urllib.request
     import os
     import subprocess
@@ -252,6 +255,7 @@ def find_benchmarks(name, download_url):
     import tempfile
     import resource
     import random
+    import time
     random.seed(0)
 
     GB = 1024 * 1024 * 1024
@@ -279,14 +283,20 @@ def find_benchmarks(name, download_url):
             for root, _, files in os.walk(temp_extract_dir):
                 smt_files = [f for f in files if not f.startswith(".") and f.endswith(".smt2")]
 
+                start_time = time.time()
                 can_benefit_files = []
-                for file in smt_files:
+                for idx, file in enumerate(smt_files):
+                    if time.time() - start_time > folder_timeout:
+                        print(f"Timeout reached for folder {root}. Skipping remaining {len(smt_files) - idx} files.")
+                        break
                     full_path = os.path.join(root, file)
                     rel_path = os.path.relpath(full_path, temp_extract_dir)
 
                     try:
+                        cmd =  "../xmtcom/target/release/check"
+                        cmd = [cmd, full_path] if qf else [cmd, "--qf", full_path]
                         res = subprocess.run(
-                            ["../xmtcom/target/release/check", full_path],
+                            cmd,
                             capture_output=True,
                             text=True,
                             preexec_fn=limit_memory

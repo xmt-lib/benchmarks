@@ -3,7 +3,7 @@ import re
 import os
 
 name = os.path.splitext(os.path.basename(__file__))[0]
-logic = "LIA"
+logic = "UFLIA"
 result = "sat"
 
 def smt(number=21):

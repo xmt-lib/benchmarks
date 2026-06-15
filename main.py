@@ -256,6 +256,7 @@ def find_benchmarks(name, download_url, qf, folder_timeout=300):
     import resource
     import random
     import time
+    import csv
     random.seed(0)
 
     GB = 1024 * 1024 * 1024
@@ -263,6 +264,12 @@ def find_benchmarks(name, download_url, qf, folder_timeout=300):
 
     def limit_memory():
         resource.setrlimit(resource.RLIMIT_AS, (MEMORY_LIMIT, MEMORY_LIMIT))
+
+    qf_csv_path = "Result_qf.csv"
+    if qf and not os.path.exists(qf_csv_path):
+        with open(qf_csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["file", "successive", "skeleton"])
 
     print(f"Downloading {name}...")
     try:
@@ -294,7 +301,7 @@ def find_benchmarks(name, download_url, qf, folder_timeout=300):
 
                     try:
                         cmd =  "../xmtcom/target/release/check"
-                        cmd = [cmd, full_path] if qf else [cmd, "--qf", full_path]
+                        cmd = [cmd, "--qf", full_path] if qf else [cmd, full_path]
                         res = subprocess.run(
                             cmd,
                             capture_output=True,
@@ -303,6 +310,9 @@ def find_benchmarks(name, download_url, qf, folder_timeout=300):
                         )
                         stdout = res.stdout
                         has_error = (res.returncode != 0)
+                        if qf and not has_error:
+                            if "******" in stdout or "at position" in stdout or "Error:" in stdout:
+                                has_error = True
                         can_benefit = "This file can benefit from xmt-lib." in stdout
 
                         if has_error:
@@ -317,6 +327,20 @@ def find_benchmarks(name, download_url, qf, folder_timeout=300):
                             os.makedirs(dest_dir, exist_ok=True)
                             dest_file = os.path.join(dest_dir, os.path.basename(rel_path))
                             shutil.copy2(full_path, dest_file)
+
+                        elif qf:
+                            stdout_clean = stdout.strip()
+                            if "," in stdout_clean:
+                                parts = stdout_clean.split(",", 1)
+                                try:
+                                    successive = int(parts[0])
+                                    skeleton = parts[1]
+                                    if successive > 10:
+                                        with open(qf_csv_path, "a", newline="", encoding="utf-8") as f:
+                                            writer = csv.writer(f)
+                                            writer.writerow([rel_path, successive, skeleton])
+                                except ValueError:
+                                    pass
 
                         elif can_benefit:
                             can_benefit_files.append((full_path, rel_path, stdout))

@@ -67,38 +67,39 @@ def run_xmt(script, benchmark, size, csv):
     return error == ""
 
 
-def run_z3(script, benchmark, size, csv, WRITE=False):
+def save_smt_files(script, benchmark):
+    output_dir = os.path.join(
+        "..",
+        "benchmark-submission",
+        "non-incremental",
+        benchmark.logic,
+        "20260521-Grounders"
+    )
+    os.makedirs(output_dir, exist_ok=True)
+
+    path = os.path.join(output_dir, f"{benchmark.name}.smt2")
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(script)
+
+    print(f"Saved SMT script to: {path}")
+
+    # to xmt-lib benchmarks
+    output_dir = os.path.join(
+        "..",
+        "xmtcom",
+        "benchmarks"
+    )
+    os.makedirs(output_dir, exist_ok=True)
+
+    path = os.path.join(output_dir, f"{benchmark.name}.smt2")
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(script)
+
+    print(f"Saved SMT script to: {path}")
+
+
+def run_z3(script, benchmark, size, csv):
     print("running z3")
-
-    if WRITE:
-        output_dir = os.path.join(
-            "..",
-            "benchmark-submission",
-            "non-incremental",
-            benchmark.logic,
-            "20260521-Grounders"
-        )
-        os.makedirs(output_dir, exist_ok=True)
-
-        path = os.path.join(output_dir, f"{benchmark.name}.smt2")
-        with open(path, "w", encoding="utf-8") as file:
-            file.write(script)
-
-        print(f"Saved SMT script to: {path}")
-
-        # to xmt-lib benchmarks
-        output_dir = os.path.join(
-            "..",
-            "xmtcom",
-            "benchmarks"
-        )
-        os.makedirs(output_dir, exist_ok=True)
-
-        path = os.path.join(output_dir, f"{benchmark.name}.smt2")
-        with open(path, "w", encoding="utf-8") as file:
-            file.write(script)
-
-        print(f"Saved SMT script to: {path}")
 
     start_time = time.time()
 

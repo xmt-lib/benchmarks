@@ -2,7 +2,7 @@ import argparse
 import inspect
 import random
 random.seed(0)
-from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT
+from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT, save_smt_files
 import src.CommonItems
 import src.CompleteSets
 import src.GraphColoring.GraphColoring
@@ -22,11 +22,25 @@ import src.QuasiGroup
 import src.RamseyNumbers
 import src.TGCheckSat
 
+DIRT_BENCHMARKS = [
+    src.CommonItems,
+    src.CompleteSets,
+    src.GraphColoring.GraphColoring,
+    src.N_queens,
+    src.NonPartitionRemovalColoring,
+    src.PackingProblem,
+    src.PPM,
+    src.QuasiGroup,
+    src.RamseyNumbers,
+    src.TGCheckSat,
+]
+
 def main():
     parser = argparse.ArgumentParser(description="Benchmark Runner CLI")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
-    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers, and generate SMT-LIB benchmark files")
+    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
+    group.add_argument("--dirtWrite", action="store_true", help="Generate SMT-LIB benchmark files for DIRT benchmarks")
     group.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
     group.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
     group.add_argument("--smt", action="store_true", help="Run found SMT benchmarks")
@@ -155,20 +169,7 @@ def main():
             run_xmt(script, bench, 1, csv=csv_file)
 
     if args.dirt:
-        benchmarks = [
-            src.CommonItems,
-            src.CompleteSets,
-            src.GraphColoring.GraphColoring,
-            src.N_queens,
-            src.NonPartitionRemovalColoring,
-            src.PackingProblem,
-            src.PPM,
-            src.QuasiGroup,
-            src.RamseyNumbers,
-            src.TGCheckSat,
-        ]
-
-        for benchmark in benchmarks:
+        for benchmark in DIRT_BENCHMARKS:
             print(f"========================================")
             print(f"Running benchmark: {benchmark.name}")
             print(f"========================================")
@@ -180,9 +181,19 @@ def main():
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            run_z3(smt, benchmark, size, csv="Result_dirt.csv", WRITE=True)
+            run_z3(smt, benchmark, size, csv="Result_dirt.csv")
             run_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
             run_xmt(smt, benchmark, size, csv="Result_dirt.csv")
+
+    if args.dirtWrite:
+        for benchmark in DIRT_BENCHMARKS:
+            print(f"========================================")
+            print(f"Generating SMT script for: {benchmark.name}")
+            print(f"========================================")
+
+            # Generate the SMT scripts with default parameters
+            smt = benchmark.smt()
+            save_smt_files(smt, benchmark)
 
 def plot_coloring_results(csv_path="Result_coloring.csv", output_path="Result_coloring.png"):
     import os

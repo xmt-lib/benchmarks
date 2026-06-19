@@ -50,7 +50,7 @@ def run_solver(solver_name, cmd, script, benchmark, size, csv_path, use_temp_fil
 
         if stdout:
             print(f"Result:\n{stdout.strip()}")
-            if not benchmark.result in stdout:
+            if not benchmark.result.lower() in stdout.lower():
                 print(f"*******  Incorrect result  !!!!!!!!!!")
                 error = f"Incorrect: {stdout}"
         if error:
@@ -87,6 +87,12 @@ def run_z3(script, benchmark, size, csv):
 
 def run_cvc5(script, benchmark, size, csv):
     return run_solver("cvc5", ["cvc5", "--lang=smt2"], script, benchmark, size, csv)
+
+
+def run_asp(script, benchmark, size, csv):
+    # clingo reads from stdin. We can optionally specify a time limit in clingo, but
+    # run_solver already handles the subprocess timeout.
+    return run_solver("clingo", ["python", "-m", "clingo"], script, benchmark, size, csv)
 
 
 def save_smt_files(script, benchmark):

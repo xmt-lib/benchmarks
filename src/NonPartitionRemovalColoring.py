@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "unsat"
 
-def smt(file_path="src/NonPartition_1000_2_7.asp"):
+def read_data(file_path):
     with open(file_path) as fd:
         file_str = fd.read()
     vertex = list()
@@ -15,6 +15,10 @@ def smt(file_path="src/NonPartition_1000_2_7.asp"):
     edge = list()
     for li in re.finditer(r"(?m)^edge\(([^,\)]+),([^,\)]+)\)\.", file_str):
         edge.append((int(li.group(1)), int(li.group(2))))
+    return file_str, vertex, edge
+
+def smt(file_path="src/NonPartition_1000_2_7.asp"):
+    file_str, vertex, edge = read_data(file_path)
 
     nodes_str = " ".join([f'(a{i})' for i in vertex])
     edge_expr = '\n  '.join([f'(and (= x a{n1}) (= y a{n2}))' for (n1, n2) in edge])
@@ -61,3 +65,21 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(file_path="src/NonPartition_1000_2_7.asp"):
+    file_str, vertex, edge = read_data(file_path)
+
+    asp_str = f"""{file_str}
+keep(X) :- vertex(X), not delete(X).
+delete(X) :- vertex(X), not keep(X).
+:- delete(X), vertex(Y), not keep(Y), X != Y.
+kept_edge(V1, V2) :- keep(V1), keep(V2), edge(V1, V2).
+
+blue(N) :- keep(N), not red(N), not green(N).
+red(N) :- keep(N), not blue(N), not green(N).
+green(N) :- keep(N), not red(N), not blue(N).
+:- kept_edge(N1,N2), blue(N1), blue(N2).
+:- kept_edge(N1,N2), red(N1), red(N2).
+:- kept_edge(N1,N2), green(N1), green(N2).
+"""
+    return asp_str

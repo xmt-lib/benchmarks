@@ -59,3 +59,20 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(number=21):
+    asp_str = f"""node(1..{number}).
+arc(X,Y) :- node(X), node(Y), X < Y.
+blue(X, Y) :- arc(X, Y), not red(X, Y).
+red(X, Y) :- arc(X, Y), not blue(X, Y).
+
+:- W < X,W < Y,X < Y,W < Z,Y < Z,X < Z,W < T,X < T,Y < T,Z < T,
+   red(W,X),red(W,Y),red(X,Y),red(W,Z),red(Y,Z),red(X,Z),red(W,T),
+   red(X,T),red(Y,T),red(Z,T),  
+   node(X),  node(Y),  node(Z),  node(W),  node(T).
+:- W < X,W < Y,X < Y,W < Z,Y < Z,X < Z,W < T,X < T,Y < T,Z < T,
+   blue(W,X),blue(W,Y),blue(X,Y),blue(W,Z),blue(Y,Z),blue(X,Z),blue(W,T),
+   blue(X,T),blue(Y,T),blue(Z,T), 
+   node(X),  node(Y),  node(Z),  node(W),  node(T).
+"""
+    return asp_str

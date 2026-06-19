@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def smt(file_path="src/PPM-0045-350-0.asp"):
+def read_data(file_path):
     with open(file_path) as fd:
         file_str = fd.read()
     t: list[tuple[int, int]] = list()
@@ -20,6 +20,10 @@ def smt(file_path="src/PPM-0045-350-0.asp"):
         colour.append(col.group(1))
     patternlength = int(re.findall(r"(?m)^patternlength\(([^,\)]+)\)\.", file_str)[0])
     max_number = max(t, key=lambda x: x[0])[0]
+    return file_str, t, p, colour, patternlength, max_number
+
+def smt(file_path="src/PPM-0045-350-0.asp"):
+    file_str, t, p, colour, patternlength, max_number = read_data(file_path)
 
     pf_expr = "0"
     for (sq, s) in reversed(p):
@@ -91,3 +95,20 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(file_path="src/PPM-0045-350-0.asp"):
+    file_str, t, p, colour, patternlength, max_number = read_data(file_path)
+
+    asp_str = f"""{file_str}
+kval(K) :- p(K,P), patternlength(L), K <= L.
+pair(K1,K2) :- kval(K1), kval(K2), p(K1,P1), p(K2,P2), P1 <= P2.
+
+{{ geq(K,I) }} :- kval(K), t(I,E).
+:- kval(K), t(I,E), geq(K,I+1), not geq(K,I).
+:- kval(K), t(I,E), geq(K-1,I), not geq(K,I+1).
+:- kval(K), not geq(K,K).
+
+solution(K,E) :- kval(K), t(I,E), geq(K,I), not geq(K,I+1).
+:- pair(K1,K2), solution(K1,E1), solution(K2,E2), E2 < E1.
+"""
+    return asp_str

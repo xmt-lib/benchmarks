@@ -47,3 +47,15 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(n=37):
+    asp_str = f"""number(1..{n}).
+1 <= {{ q(X,Y) : number(Y) }} <= 1 :- number(X).
+1 <= {{ q(X,Y) : number(X) }} <= 1 :- number(Y).
+
+
+:- number(X1;X2;Y1;Y2), q(X1,Y1), q(X2,Y2), X1 < X2, Y1 == Y2.
+:- number(X1;X2;Y1;Y2), q(X1,Y1), q(X2,Y2), X1 < X2, Y1 + X1 == Y2 + X2.
+:- number(X1;X2;Y1;Y2), q(X1,Y1), q(X2,Y2), X1 < X2, Y1 - X1 == Y2 - X2.
+"""
+    return asp_str

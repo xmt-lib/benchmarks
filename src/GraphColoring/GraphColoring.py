@@ -5,10 +5,15 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "unsat"
 
-def smt(size=2500, density=0.01):
+def generate_data(size, density):
     prng = Random(f"GraphColoring-{size}-{density}")
     graph = [(int((number) / size + 1), number % size + 1)
         for number in prng.sample(range(size * size), int(size * size * density))]
+    nodes = [f"node({i})." for i in range(1, size + 1)]
+    return graph, nodes
+
+def smt(size=2500, density=0.01):
+    graph, nodes = generate_data(size, density)
 
     edge_expr = "\n  ".join([f"(and (= x {a}) (= y {b}))" for (a, b) in graph])
 
@@ -42,3 +47,20 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(size=2500, density=0.01):
+    graph, nodes = generate_data(size, density)
+    colors = ["colour(red).", "colour(blue).", "colour(green).", "colour(orange).", "colour(purple)."]
+    links = [f"link({a}, {b})." for (a, b) in graph]
+
+    nodes_str = "\n".join(nodes)
+    colors_str = "\n".join(colors)
+    links_str = "\n".join(links)
+
+    asp_str = f"""{nodes_str}
+{colors_str}
+{links_str}
+1 <= {{colourOf(N, C): colour(C) }} <= 1 :- node(N).
+:- colourOf(N1, C), colourOf(N2, C), link(N1, N2), colour(C).
+"""
+    return asp_str

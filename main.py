@@ -40,6 +40,7 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
     group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
+    group.add_argument("--asp", action="store_true", help="Run DIRT benchmarks on ASP solver (clingo)")
     group.add_argument("--dirtWrite", action="store_true", help="Generate SMT-LIB benchmark files for DIRT benchmarks")
     group.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
     group.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
@@ -184,6 +185,22 @@ def main():
             run_z3(smt, benchmark, size, csv="Result_dirt.csv")
             run_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
             run_xmt(smt, benchmark, size, csv="Result_dirt.csv")
+
+    if args.asp:
+        from src.run import run_asp
+        for benchmark in DIRT_BENCHMARKS:
+            print(f"========================================")
+            print(f"Running ASP benchmark: {benchmark.name}")
+            print(f"========================================")
+
+            # Generate the ASP scripts with default parameters
+            asp_script = benchmark.asp()
+            sig = inspect.signature(benchmark.asp)
+            first_param = list(sig.parameters.values())[0]
+            size = 1 if first_param.name == "file_path" else first_param.default
+
+            # Execute solver run
+            run_asp(asp_script, benchmark, size, csv="Result_asp.csv")
 
     if args.dirtWrite:
         for benchmark in DIRT_BENCHMARKS:

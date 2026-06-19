@@ -6,7 +6,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFLIA"
 result = "sat"
 
-def smt(file_path="src/QuasiGroup-d_50-p_60.asp"):
+def read_data(file_path):
     with open(file_path) as fd:
         file_str = fd.read()
 
@@ -21,6 +21,11 @@ def smt(file_path="src/QuasiGroup-d_50-p_60.asp"):
     v: list[tuple[int, int]] = list()
     for sq in re.finditer(r"(?m)^v\(([^,\)]+),([^,\)]+)\)\.", file_str):
         v.append((int(sq.group(1)), int(sq.group(2))))
+    
+    return file_str, state, domain, v
+
+def smt(file_path="src/QuasiGroup-d_50-p_60.asp"):
+    file_str, state, domain, v = read_data(file_path)
 
     v_expr = "\n  ".join([f"(and (= x {a}) (= y {b}))" for (a,b) in v])
     state_expr = "\n  ".join([f"(and (= x {a}) (= y {b}) (= z {c}))" for (a,b,c) in state])
@@ -81,3 +86,19 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(file_path="src/QuasiGroup-d_50-p_60.asp"):
+    file_str, state, domain, v = read_data(file_path)
+
+    asp_str = f"""{file_str}
+assign(V,X,Y):-v(X,Y),domain(V),not nassign(V,X,Y).
+nassign(V,X,Y):-v(X,Y),domain(V),not assign(V,X,Y).
+
+:-assign(V,X1,Y),assign(V,X2,Y),X1<X2.
+:-assign(V,X,Y1),assign(V,X,Y2),Y1<Y2.
+:-state(X,Y,S), not assign(S,X,Y).
+
+assigned(V):-assign(V,X,Y).
+:-domain(V),not assigned(V).
+"""
+    return asp_str

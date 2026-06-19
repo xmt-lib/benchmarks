@@ -6,9 +6,13 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "UFDTLIA"
 result = "sat"
 
-def smt(size=250):
+def generate_data(size):
     edge = [(i, j) for x in range(0, size) for i, j in [(x, x+1), (x, x+2)] if j < size]
     p = [(i, i+1, i+2) for i in range(0, size) if i+2 < size]
+    return edge, p
+
+def smt(size=250):
+    edge, p = generate_data(size)
 
     nodes_str = " ".join(f'(a{i})' for i in range(0, size))
     edge_expr = "\n  ".join([f"(and (= x a{a}) (= y a{b}))" for (a,b) in edge])
@@ -45,3 +49,19 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(size=250):
+    edge, p = generate_data(size)
+
+    nodes_str = "\n".join(f'node(a{i}).' for i in range(0, size))
+    edge_str = "\n".join([f"edge(a{a},a{b})." for (a,b) in edge])
+    p_str = "\n".join([f"p(a{a},a{b},a{c})." for (a,b,c) in p])
+
+    asp_str = f"""{nodes_str}
+{edge_str}
+{p_str}
+triangle(X,Y,Z) :- edge(X,Y),edge(Y,Z),edge(X,Z).
+:- triangle(X,Y,Z), not p(X,Y,Z).
+:- not triangle(X,Y,Z),p(X,Y,Z).
+"""
+    return asp_str

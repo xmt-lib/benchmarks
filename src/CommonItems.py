@@ -5,7 +5,7 @@ name = os.path.splitext(os.path.basename(__file__))[0]
 logic = "LIA"
 result = "unsat"
 
-def smt(size=200000):
+def generate_data(size):
     prng = Random(f"{id}{size}")
 
     ps = []
@@ -15,6 +15,11 @@ def smt(size=200000):
             ps.append(f'{i}')
         else:
             qs.append(f'{i}')
+    elems = [f'{i}' for i in range(0, size)]
+    return ps, qs, elems
+
+def smt(size=200000):
+    ps, qs, elems = generate_data(size)
 
     p_expr = "\n  ".join([f'(= x {p})' for p in ps])
     q_expr = "\n  ".join([f'(= y {q})' for q in qs])
@@ -47,3 +52,19 @@ From the DIRT benchmark used to evaluate grounders
 (exit)
 """
     return smt
+
+def asp(size=200000):
+    ps, qs, elems = generate_data(size)
+
+    elems_str = "; ".join(elems)
+    ps_str = "; ".join(ps)
+    qs_str = "; ".join(qs)
+
+    asp_str = f"""node({elems_str}).
+p({ps_str}).
+q({qs_str}).
+ok :- p(X), q(X).
+:- not ok.
+"""
+    
+    return asp_str

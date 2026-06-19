@@ -10,8 +10,6 @@ TIMEOUT = 60  # seconds
 GB = 1024 * 1024 * 1024
 MEMORY_LIMIT = 4 * GB
 
-WRITE = False
-
 print(subprocess.check_output(["z3", "--version"], text=True))
 
 def write_result(csv_path, name, size, solver, end_time, error):
@@ -69,7 +67,7 @@ def run_xmt(script, benchmark, size, csv):
     return error == ""
 
 
-def run_z3(script, benchmark, size, csv):
+def run_z3(script, benchmark, size, csv, WRITE=False):
     print("running z3")
 
     if WRITE:

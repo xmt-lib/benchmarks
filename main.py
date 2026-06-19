@@ -26,17 +26,17 @@ def main():
     parser = argparse.ArgumentParser(description="Benchmark Runner CLI")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
-    group.add_argument("--find", action="store_true", help="Find SMT benchmarks")
-    group.add_argument("--findQF", action="store_true", help="Find QF SMT benchmarks")
-    group.add_argument("--smt", action="store_true", help="Run SMT benchmarks")
-    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
-    group.add_argument("--asp", action="store_true", help="Run ASP benchmarks")
+    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers, and generate SMT-LIB benchmark files")
+    group.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
+    group.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
+    group.add_argument("--smt", action="store_true", help="Run found SMT benchmarks")
 
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
     if not (args.coloring or args.find or args.smt or args.dirt or args.asp):
-        args.findQF = True
+        args.coloring = True
+        args.dirt = True
 
     if args.coloring:
         benchmarks = [
@@ -180,12 +180,9 @@ def main():
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver runs
-            run_z3(smt, benchmark, size, csv="Result_dirt.csv")
+            run_z3(smt, benchmark, size, csv="Result_dirt.csv", WRITE=True)
             run_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
             run_xmt(smt, benchmark, size, csv="Result_dirt.csv")
-
-    if args.asp:
-        print("Option --asp is not defined yet.")
 
 def plot_coloring_results(csv_path="Result_coloring.csv", output_path="Result_coloring.png"):
     import os

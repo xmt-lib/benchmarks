@@ -38,7 +38,7 @@ Time limit: 300
 From the DIRT benchmark used to evaluate grounders
 |)
 (set-info :license "https://creativecommons.org/licenses/by/4.0/")
-(set-info :category "random")
+(set-info :category "crafted")
 (set-info :status {result})
 
 ; cannot use a datatype because of '<'

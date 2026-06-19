@@ -21,7 +21,7 @@ def read_data(file_path):
     v: list[tuple[int, int]] = list()
     for sq in re.finditer(r"(?m)^v\(([^,\)]+),([^,\)]+)\)\.", file_str):
         v.append((int(sq.group(1)), int(sq.group(2))))
-    
+
     return file_str, state, domain, v
 
 def smt(file_path="src/QuasiGroup-d_50-p_60.asp"):
@@ -102,3 +102,69 @@ assigned(V):-assign(V,X,Y).
 :-domain(V),not assigned(V).
 """
     return asp_str
+
+
+def sli(file_path="src/QuasiGroup-d_50-p_60.asp"):
+    file_str, state, domain, v = read_data(file_path)
+    state_str = ", ".join(f"({x}, {y}, {z})" for x, y, z in state)
+    domain_str = ", ".join(str(d) for d in domain)
+    v_str = ", ".join(f"({x}, {y})" for x, y in v)
+
+    return f"""vocabulary V {{
+    type Domain := {{{domain_str}}}
+    v: Domain * Domain -> Bool
+    state: Domain * Domain * Domain -> Bool
+    assign: Domain * Domain * Domain -> Bool
+    assigned: Domain -> Bool
+}}
+theory T: V {{
+    {{
+        !V, x, y in Domain: assigned(V) <- v(x,y) & assign(V, x, y).
+    }}
+    !V, x1, x2, y in Domain: ~(v(x1, y) & assign(V, x1, y) & v(x2,y) & assign(V, x2, y) & x1 < x2).
+    !V, x, y1, y2 in Domain: ~(v(x,y1) & assign(V, x, y1) & v(x, y2) & assign(V, x, y2) & y1 < y2).
+    !s, x, y in Domain: v(x,y) => ~(state(x, y, s) & ~assign(s, x, y)).
+    !V in Domain: assigned(V).
+}}
+structure S: V {{
+    v := {{{v_str}}}.
+    state := {{{state_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(file_path="src/QuasiGroup-d_50-p_60.asp"):
+    file_str, state, domain, v = read_data(file_path)
+    state_str = "; ".join(f"{x}, {y}, {z}" for x, y, z in state)
+    domain_str = "; ".join(str(d) for d in domain)
+    v_str = "; ".join(f"{x}, {y}" for x, y in v)
+
+    return f"""vocabulary V {{
+    type Domain isa int
+    v(Domain, Domain)
+    state(Domain, Domain, Domain)
+    assign(Domain, Domain, Domain)
+    assigned(Domain)
+}}
+theory T: V {{
+    {{
+        !V[Domain], x[Domain], y[Domain]: assigned(V) <- v(x,y) & assign(V, x, y).
+    }}
+    !V[Domain], x1[Domain], x2[Domain], y[Domain]: ~(v(x1, y) & assign(V, x1, y) & v(x2,y) & assign(V, x2, y) & x1 < x2).
+    !V[Domain], x[Domain], y1[Domain], y2[Domain]: ~(v(x,y1) & assign(V, x, y1) & v(x, y2) & assign(V, x, y2) & y1 < y2).
+    !s[Domain], x[Domain], y[Domain]: v(x,y) => ~(state(x, y, s) & ~assign(s, x, y)).
+    !V[Domain]: assigned(V).
+}}
+structure S: V {{
+    Domain = {{{domain_str}}}
+    v = {{{v_str}}}
+    state = {{{state_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

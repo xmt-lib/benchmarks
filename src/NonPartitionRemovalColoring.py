@@ -83,3 +83,61 @@ green(N) :- keep(N), not red(N), not blue(N).
 :- kept_edge(N1,N2), green(N1), green(N2).
 """
     return asp_str
+
+
+def sli(file_path="src/NonPartition_1000_2_7.asp"):
+    file_str, vertex, edge = read_data(file_path)
+    nodes_str = ", ".join(f"a{i}" for i in vertex)
+    edge_str = ", ".join(f"(a{n1}, a{n2})" for n1, n2 in edge)
+
+    return f"""
+vocabulary V {{
+    type Node := {{{nodes_str}}}
+    type Color := {{ red, green, blue }}
+    edge: Node * Node -> Bool
+    keep: Node -> Bool
+    color: Node -> Color
+}}
+theory T: V {{
+    // at most one delete
+    !x, y in Node: ~keep(x) & ~keep(y) => x = y.
+    // coloring
+    !x, y in Node: keep(x) & keep(y) & edge(x,y) => color(x) ~= color(y).
+}}
+structure S: V {{
+    edge := {{{edge_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(file_path="src/NonPartition_1000_2_7.asp"):
+    file_str, vertex, edge = read_data(file_path)
+    nodes_str = "; ".join(f"a{i}" for i in vertex)
+    edge_str = "; ".join(f"a{n1}, a{n2}" for n1, n2 in edge)
+
+    return f"""
+vocabulary V {{
+    type Node
+    type Color constructed from {{ red, green, blue }}
+    edge(Node, Node)
+    keep(Node)
+    color(Node): Color
+}}
+theory T: V {{
+    // at most one delete
+    !x[Node], y[Node]: ~keep(x) & ~keep(y) => x = y.
+    // coloring
+    !x[Node], y[Node]: keep(x) & keep(y) & edge(x,y) => color(x) ~= color(y).
+}}
+structure S: V {{
+    Node = {{{nodes_str}}}
+    edge = {{{edge_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

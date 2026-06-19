@@ -48,14 +48,29 @@ def run_solver(solver_name, cmd, script, benchmark, size, csv_path, use_temp_fil
             stdout = process.stdout
             error = process.stderr
 
+        if error and solver_name == "idp3":
+            filtered = [line for line in error.splitlines() if not line.strip().startswith("Warning:")]
+            error = "\n".join(filtered).strip()
+
         if stdout:
             print(f"Result:\n{stdout.strip()}")
-            if not benchmark.result.lower() in stdout.lower():
-                print(f"*******  Incorrect result  !!!!!!!!!!")
-                error = f"Incorrect: {stdout}"
+            if solver_name in ["idp3", "sli"]:
+                if benchmark.result.lower() == "sat":
+                    if "model 1" not in stdout.lower() and "satisfiable" not in stdout.lower() and "model" not in stdout.lower():
+                        print(f"*******  Incorrect result  !!!!!!!!!!")
+                        error = f"Incorrect: {stdout}"
+                else: # unsat
+                    if "unsatisfiable" not in stdout.lower():
+                        print(f"*******  Incorrect result  !!!!!!!!!!")
+                        error = f"Incorrect: {stdout}"
+            else:
+                if not benchmark.result.lower() in stdout.lower():
+                    print(f"*******  Incorrect result  !!!!!!!!!!")
+                    error = f"Incorrect: {stdout}"
         if error:
             print(f"Error output:\n{error.strip()}")
-            error = f"stderr : {error.strip()}"
+            if not error.startswith("Incorrect:"):
+                error = f"stderr : {error.strip()}"
 
     except subprocess.TimeoutExpired:
         print(f"Error: {solver_name} execution timed out after {TIMEOUT} seconds.")
@@ -93,6 +108,23 @@ def run_asp(script, benchmark, size, csv):
     # clingo reads from stdin. We can optionally specify a time limit in clingo, but
     # run_solver already handles the subprocess timeout.
     return run_solver("clingo", ["python", "-m", "clingo"], script, benchmark, size, csv)
+
+
+def run_idp3(script, benchmark, size, csv):
+    default_idp3 = os.path.expanduser("~/.local/share/idp3_install/idp3-3.7.1-Linux/usr/local/bin/idp")
+    default_idp3 = os.path.abspath(default_idp3)
+    if not os.path.exists(default_idp3):
+        default_idp3 = "idp"
+    
+    idp3_exec = os.environ.get("IDP3_EXEC", default_idp3)
+    # IDP3 reads from stdin, but run_solver handles that. 
+    return run_solver("idp3", [idp3_exec], script, benchmark, size, csv, use_temp_file=True)
+
+
+def run_sli(script, benchmark, size, csv):
+    # use sli-lib CLI: sli expand <file>
+    # DIRT uses `--satset`, which corresponds to `--interp-mode satset` in the latest sli expand.
+    return run_solver("sli", ["sli", "expand", "--interp-mode", "satset"], script, benchmark, size, csv, use_temp_file=True)
 
 
 def save_smt_files(script, benchmark):

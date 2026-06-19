@@ -112,3 +112,73 @@ solution(K,E) :- kval(K), t(I,E), geq(K,I), not geq(K,I+1).
 :- pair(K1,K2), solution(K1,E1), solution(K2,E2), E2 < E1.
 """
     return asp_str
+
+
+def sli(file_path="src/PPM-0045-350-0.asp"):
+    file_str, t, p, colour, patternlength, max_number = read_data(file_path)
+    t_str = ", ".join(str(i[0]) for i in t)
+    p_len_str = ", ".join(str(i) for i in range(1, patternlength + 1))
+    colors = set(c[1] for c in p).union(set(c[1] for c in t))
+    c_str = ", ".join(str(c) for c in colors)
+    p_str = ", ".join(f"{i} -> {c}" for i, c in p)
+    t_color_str = ", ".join(f"{i} -> {c}" for i, c in t)
+
+    return f"""vocabulary V {{
+    type T := {{{t_str}}}
+    type P := {{{p_len_str}}}
+    type Color := {{{c_str}}}
+    p_color: P -> Color
+    t_color: T -> Color
+    map: P -> T
+}}
+theory T: V {{
+    // Monotonic mapping
+    !x1, x2 in P: x1 < x2 => map(x1) < map(x2).
+    // Colors must match
+    !x in P: p_color(x) = t_color(map(x)).
+}}
+structure S: V {{
+    p_color := {{{p_str}}}.
+    t_color := {{{t_color_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(file_path="src/PPM-0045-350-0.asp"):
+    file_str, t, p, colour, patternlength, max_number = read_data(file_path)
+    t_str = "; ".join(str(i[0]) for i in t)
+    p_len_str = "; ".join(str(i) for i in range(1, patternlength + 1))
+    colors = set(c[1] for c in p).union(set(c[1] for c in t))
+    c_str = "; ".join(str(c) for c in colors)
+    p_str = "; ".join(f"{i}, {c}" for i, c in p)
+    t_color_str = "; ".join(f"{i}, {c}" for i, c in t)
+
+    return f"""vocabulary V {{
+    type T isa int
+    type P isa int
+    type Color isa int
+    p_color(P): Color
+    t_color(T): Color
+    map(P): T
+}}
+theory T: V {{
+    // Monotonic mapping
+    !x1[P], x2[P]: x1 < x2 => map(x1) < map(x2).
+    // Colors must match
+    !x[P]: p_color(x) = t_color(map(x)).
+}}
+structure S: V {{
+    T = {{{t_str}}}
+    P = {{{p_len_str}}}
+    Color = {{{c_str}}}
+    p_color = {{{p_str}}}
+    t_color = {{{t_color_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

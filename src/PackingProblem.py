@@ -101,3 +101,75 @@ pos_square(I) :- pos(I,X,Y).
 :- pos(I1,X1,Y1), square(I1,D1), pos(I2,X2,Y2), square(I2,D2), I1 != I2, W1 = X1+D1, H1 = Y1+D1, W2 = X2+D2, H2 = Y2+D2, W2 > X1, W2 <= W1, H2 > Y1, H2 <= H1.
 """
     return asp_str
+
+
+def sli(file_path="src/PackingProblem-45-0-0.asp"):
+    file_str, square_size, max_square, area = read_data(file_path)
+    sq_str = ", ".join(str(i) for i in range(1, max_square + 1))
+    w_str = ", ".join(str(i) for i in range(1, area[0] + 1))
+    h_str = ", ".join(str(i) for i in range(1, area[1] + 1))
+    size_str = ", ".join(f"{s} -> {l}" for s, l in square_size)
+    
+    return f"""vocabulary V {{
+    type Square := {{{sq_str}}}
+    type W := {{{w_str}}}
+    type H := {{{h_str}}}
+    type Size := {{1..{max(area[0], area[1])}}}
+    size: Square -> Size
+    pos_x: Square -> W
+    pos_y: Square -> H
+}}
+theory T: V {{
+    !s in Square: pos_x(s) + size(s) - 1 =< {area[0]}.
+    !s in Square: pos_y(s) + size(s) - 1 =< {area[1]}.
+    !s1, s2 in Square: s1 ~= s2 => 
+        pos_x(s1) >= pos_x(s2) + size(s2) | 
+        pos_x(s2) >= pos_x(s1) + size(s1) | 
+        pos_y(s1) >= pos_y(s2) + size(s2) | 
+        pos_y(s2) >= pos_y(s1) + size(s1).
+}}
+structure S: V {{
+    size := {{{size_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(file_path="src/PackingProblem-45-0-0.asp"):
+    file_str, square_size, max_square, area = read_data(file_path)
+    sq_str = "; ".join(str(i) for i in range(1, max_square + 1))
+    w_str = "; ".join(str(i) for i in range(1, area[0] + 1))
+    h_str = "; ".join(str(i) for i in range(1, area[1] + 1))
+    size_str = "; ".join(f"{s}, {l}" for s, l in square_size)
+    
+    return f"""vocabulary V {{
+    type Square isa int
+    type W isa int
+    type H isa int
+    type Size = {{1..{max(area[0], area[1])}}} isa int
+    size(Square): Size
+    pos_x(Square): W
+    pos_y(Square): H
+}}
+theory T: V {{
+    !s[Square]: pos_x(s) + size(s) - 1 =< {area[0]}.
+    !s[Square]: pos_y(s) + size(s) - 1 =< {area[1]}.
+    !s1[Square], s2[Square]: s1 ~= s2 => 
+        pos_x(s1) >= pos_x(s2) + size(s2) | 
+        pos_x(s2) >= pos_x(s1) + size(s1) | 
+        pos_y(s1) >= pos_y(s2) + size(s2) | 
+        pos_y(s2) >= pos_y(s1) + size(s1).
+}}
+structure S: V {{
+    Square = {{{sq_str}}}
+    W = {{{w_str}}}
+    H = {{{h_str}}}
+    size = {{{size_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

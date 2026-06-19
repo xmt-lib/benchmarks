@@ -68,11 +68,79 @@ red(X, Y) :- arc(X, Y), not blue(X, Y).
 
 :- W < X,W < Y,X < Y,W < Z,Y < Z,X < Z,W < T,X < T,Y < T,Z < T,
    red(W,X),red(W,Y),red(X,Y),red(W,Z),red(Y,Z),red(X,Z),red(W,T),
-   red(X,T),red(Y,T),red(Z,T),  
+   red(X,T),red(Y,T),red(Z,T),
    node(X),  node(Y),  node(Z),  node(W),  node(T).
 :- W < X,W < Y,X < Y,W < Z,Y < Z,X < Z,W < T,X < T,Y < T,Z < T,
    blue(W,X),blue(W,Y),blue(X,Y),blue(W,Z),blue(Y,Z),blue(X,Z),blue(W,T),
-   blue(X,T),blue(Y,T),blue(Z,T), 
+   blue(X,T),blue(Y,T),blue(Z,T),
    node(X),  node(Y),  node(Z),  node(W),  node(T).
 """
     return asp_str
+
+
+def sli(number=21):
+    domain_str = ", ".join(str(i) for i in range(1, number+1))
+
+    return f"""vocabulary V {{
+    type Node := {{{domain_str}}}
+    edge: Node * Node -> Bool
+}}
+theory T: V {{
+    !x, y in Node: edge(x,y) => edge(y,x).
+    !x in Node: ~edge(x,x).
+    ~(?x1, x2, x3, x4, x5 in Node:
+        x1 ~= x2 & x1 ~= x3 & x1 ~= x4 & x1 ~= x5 &
+        x2 ~= x3 & x2 ~= x4 & x2 ~= x5 &
+        x3 ~= x4 & x3 ~= x5 & x4 ~= x5 &
+        edge(x1, x2) & edge(x1, x3) & edge(x1, x4) & edge(x1, x5) &
+        edge(x2, x3) & edge(x2, x4) & edge(x2, x5) &
+        edge(x3, x4) & edge(x3, x5) & edge(x4, x5)).
+    ~(?x1, x2, x3, x4, x5 in Node:
+        x1 ~= x2 & x1 ~= x3 & x1 ~= x4 & x1 ~= x5 &
+        x2 ~= x3 & x2 ~= x4 & x2 ~= x5 &
+        x3 ~= x4 & x3 ~= x5 & x4 ~= x5 &
+        ~edge(x1, x2) & ~edge(x1, x3) & ~edge(x1, x4) & ~edge(x1, x5) &
+        ~edge(x2, x3) & ~edge(x2, x4) & ~edge(x2, x5) &
+        ~edge(x3, x4) & ~edge(x3, x5) & ~edge(x4, x5)).
+}}
+structure S: V {{
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(number=21):
+    domain_str = "; ".join(str(i) for i in range(1, number+1))
+
+    return f"""vocabulary V {{
+    type Node
+    edge(Node, Node)
+}}
+theory T: V {{
+    !x[Node], y[Node]: edge(x,y) => edge(y,x).
+    !x[Node]: ~edge(x,x).
+    ~(?x1[Node], x2[Node], x3[Node], x4[Node], x5[Node]:
+        x1 ~= x2 & x1 ~= x3 & x1 ~= x4 & x1 ~= x5 &
+        x2 ~= x3 & x2 ~= x4 & x2 ~= x5 &
+        x3 ~= x4 & x3 ~= x5 & x4 ~= x5 &
+        edge(x1, x2) & edge(x1, x3) & edge(x1, x4) & edge(x1, x5) &
+        edge(x2, x3) & edge(x2, x4) & edge(x2, x5) &
+        edge(x3, x4) & edge(x3, x5) & edge(x4, x5)).
+    ~(?x1[Node], x2[Node], x3[Node], x4[Node], x5[Node]:
+        x1 ~= x2 & x1 ~= x3 & x1 ~= x4 & x1 ~= x5 &
+        x2 ~= x3 & x2 ~= x4 & x2 ~= x5 &
+        x3 ~= x4 & x3 ~= x5 & x4 ~= x5 &
+        ~edge(x1, x2) & ~edge(x1, x3) & ~edge(x1, x4) & ~edge(x1, x5) &
+        ~edge(x2, x3) & ~edge(x2, x4) & ~edge(x2, x5) &
+        ~edge(x3, x4) & ~edge(x3, x5) & ~edge(x4, x5)).
+}}
+structure S: V {{
+    Node = {{{domain_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

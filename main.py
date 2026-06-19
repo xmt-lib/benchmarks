@@ -40,8 +40,10 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
     group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
-    group.add_argument("--asp", action="store_true", help="Run DIRT benchmarks on ASP solver (clingo)")
     group.add_argument("--dirtWrite", action="store_true", help="Generate SMT-LIB benchmark files for DIRT benchmarks")
+    group.add_argument("--asp", action="store_true", help="Run DIRT benchmarks on ASP solver (clingo)")
+    group.add_argument("--idp3", action="store_true", help="Run DIRT benchmarks on IDP3 solver")
+    group.add_argument("--sli", action="store_true", help="Run DIRT benchmarks on SLI solver")
     group.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
     group.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
     group.add_argument("--smt", action="store_true", help="Run found SMT benchmarks")
@@ -49,7 +51,7 @@ def main():
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
-    if not (args.coloring or args.find or args.smt or args.dirt or args.asp):
+    if not (args.coloring or args.find or args.smt or args.dirt or args.asp or args.idp3 or args.sli):
         args.coloring = True
         args.dirt = True
 
@@ -201,6 +203,46 @@ def main():
 
             # Execute solver run
             run_asp(asp_script, benchmark, size, csv="Result_asp.csv")
+
+    if args.idp3:
+        from src.run import run_idp3
+        for benchmark in DIRT_BENCHMARKS:
+            print(f"========================================")
+            print(f"Running IDP3 benchmark: {benchmark.name}")
+            print(f"========================================")
+
+            if not hasattr(benchmark, "idp3"):
+                print("No idp3 method found, skipping")
+                continue
+
+            # Generate the IDP3 scripts with default parameters
+            sig = inspect.signature(benchmark.idp3)
+            first_param = list(sig.parameters.values())[0]
+            size = 1 if first_param.name == "file_path" else first_param.default
+
+            # Execute solver runs
+            idp3_script = benchmark.idp3()
+            run_idp3(idp3_script, benchmark, size, csv="Result_idp3.csv")
+
+    if args.sli:
+        from src.run import run_sli
+        for benchmark in DIRT_BENCHMARKS:
+            print(f"========================================")
+            print(f"Running SLI benchmark: {benchmark.name}")
+            print(f"========================================")
+
+            if not hasattr(benchmark, "sli"):
+                print("No sli method found, skipping")
+                continue
+
+            # Generate the SLI scripts with default parameters
+            sig = inspect.signature(benchmark.sli)
+            first_param = list(sig.parameters.values())[0]
+            size = 1 if first_param.name == "file_path" else first_param.default
+
+            # Execute solver runs
+            sli_script = benchmark.sli()
+            run_sli(sli_script, benchmark, size, csv="Result_sli.csv")
 
     if args.dirtWrite:
         for benchmark in DIRT_BENCHMARKS:

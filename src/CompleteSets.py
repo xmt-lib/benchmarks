@@ -68,3 +68,55 @@ q({qs_str}).
 :- not p(N), not q(N), node(N).
 """
     return asp_str
+
+
+def sli(size=200000):
+    ps, qs, elems = generate_data(size)
+    elems_str = ", ".join(elems)
+    ps_str = ", ".join(ps)
+    qs_str = ", ".join(qs)
+
+    return f"""
+vocabulary V {{
+    type Domain := {{{elems_str}}}
+    p: Domain -> Bool
+    q: Domain -> Bool
+}}
+theory T: V {{
+    ?x in Domain: p(x) & ~q(x).
+}}
+structure S: V {{
+    p := {{{ps_str}}}.
+    q := {{{qs_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(size=200000):
+    ps, qs, elems = generate_data(size)
+    elems_str = "; ".join(elems)
+    ps_str = "; ".join(ps)
+    qs_str = "; ".join(qs)
+
+    return f"""
+vocabulary V {{
+    type Domain
+    p(Domain)
+    q(Domain)
+}}
+theory T: V {{
+    ?x[Domain]: p(x) & ~q(x).
+}}
+structure S: V {{
+    Domain = {{{elems_str}}}
+    p = {{{ps_str}}}
+    q = {{{qs_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

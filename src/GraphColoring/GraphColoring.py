@@ -64,3 +64,55 @@ def asp(size=2500, density=0.01):
 :- colourOf(N1, C), colourOf(N2, C), link(N1, N2), colour(C).
 """
     return asp_str
+
+
+def sli(size=2500, density=0.01):
+    graph, nodes = generate_data(size, density)
+    nodes_str = ", ".join(str(i) for i in range(1, size + 1))
+    colors_str = "red, blue, green, orange, purple"
+    edge_str = ", ".join(f"({n1}, {n2})" for n1, n2 in graph)
+
+    return f"""
+vocabulary V {{
+    type Node := {{{nodes_str}}}
+    type Color := {{{colors_str}}}
+    edge: Node * Node -> Bool
+    color: Node -> Color
+}}
+theory T: V {{
+    !x, y in Node: edge(x,y) => color(x) ~= color(y).
+}}
+structure S: V {{
+    edge := {{{edge_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(size=2500, density=0.01):
+    graph, nodes = generate_data(size, density)
+    nodes_str = "; ".join(str(i) for i in range(1, size + 1))
+    colors_str = "red, blue, green, orange, purple"
+    edge_str = "; ".join(f"{n1}, {n2}" for n1, n2 in graph)
+
+    return f"""
+vocabulary V {{
+    type Node
+    type Color constructed from {{{colors_str}}}
+    edge(Node, Node)
+    color(Node): Color
+}}
+theory T: V {{
+    !x[Node], y[Node]: edge(x,y) => color(x) ~= color(y).
+}}
+structure S: V {{
+    Node = {{{nodes_str}}}
+    edge = {{{edge_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

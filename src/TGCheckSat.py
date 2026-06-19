@@ -65,3 +65,53 @@ triangle(X,Y,Z) :- edge(X,Y),edge(Y,Z),edge(X,Z).
 :- not triangle(X,Y,Z),p(X,Y,Z).
 """
     return asp_str
+
+
+def sli(size=250):
+    edge, p = generate_data(size)
+    nodes_str = ", ".join(f"a{i}" for i in range(0, size))
+    edge_str = ", ".join(f"({a}, {b})" for a, b in edge)
+    p_str = ", ".join(f"({a}, {b}, {c})" for a, b, c in p)
+
+    return f"""vocabulary V {{
+    type Node := {{{nodes_str}}}
+    edge: Node * Node -> Bool
+    p: Node * Node * Node -> Bool
+}}
+theory T: V {{
+    ?x, y, z in Node: edge(x, y) & edge(y, z) & edge(x, z) & ~p(x, y, z).
+}}
+structure S: V {{
+    edge := {{{edge_str}}}.
+    p := {{{p_str}}}.
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(size=250):
+    edge, p = generate_data(size)
+    nodes_str = "; ".join(f"a{i}" for i in range(0, size))
+    edge_str = "; ".join(f"a{a}, a{b}" for a, b in edge)
+    p_str = "; ".join(f"a{a}, a{b}, a{c}" for a, b, c in p)
+
+    return f"""vocabulary V {{
+    type Node
+    edge(Node, Node)
+    p(Node, Node, Node)
+}}
+theory T: V {{
+    ?x[Node], y[Node], z[Node]: edge(x, y) & edge(y, z) & edge(x, z) & ~p(x, y, z).
+}}
+structure S: V {{
+    Node = {{{nodes_str}}}
+    edge = {{{edge_str}}}
+    p = {{{p_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

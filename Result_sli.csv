@@ -1,0 +1,8 @@
+name,size,solver,solve time,error,run date
+CommonItems,200000,sli,1.8097,,2026-06-22T15:41:00.172829
+CompleteSets,200000,sli,7.0871,,2026-06-22T15:41:07.449258
+GraphColoring,2500,sli,0.8897,,2026-06-22T15:41:08.455555
+N_queens,37,sli,5.1826,,2026-06-22T15:41:13.638984
+NonPartitionRemovalColoring,1,sli,8.5802,,2026-06-22T15:41:22.225834
+PackingProblem,1,sli,23.9099,,2026-06-22T15:41:46.137096
+PPM,1,sli,0.9690,,2026-06-22T15:41:47.110096

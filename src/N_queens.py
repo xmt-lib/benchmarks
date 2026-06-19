@@ -59,3 +59,47 @@ def asp(n=37):
 :- number(X1;X2;Y1;Y2), q(X1,Y1), q(X2,Y2), X1 < X2, Y1 - X1 == Y2 - X2.
 """
     return asp_str
+
+
+def sli(n=37):
+    domain_str = ", ".join(str(i) for i in range(1, n+1))
+
+    return f"""
+vocabulary V {{
+    type Number := {{{domain_str}}}
+    q: Number -> Number
+}}
+theory T: V {{
+    !x1, x2 in Number: q(x1) = q(x2) => x1 = x2.
+    !x1, x2 in Number: x1 ~= x2 => q(x1) - q(x2) ~= x1 - x2.
+    !x1, x2 in Number: x1 ~= x2 => q(x1) - q(x2) ~= x2 - x1.
+}}
+structure S: V {{
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""
+
+def idp3(n=37):
+    domain_str = "; ".join(str(i) for i in range(1, n+1))
+
+    return f"""
+vocabulary V {{
+    type Number isa int
+    q(Number): Number
+}}
+theory T: V {{
+    !x1[Number], x2[Number]: q(x1) = q(x2) => x1 = x2.
+    !x1[Number], x2[Number]: x1 ~= x2 => q(x1) - q(x2) ~= x1 - x2.
+    !x1[Number], x2[Number]: x1 ~= x2 => q(x1) - q(x2) ~= x2 - x1.
+}}
+structure S: V {{
+    Number = {{{domain_str}}}
+}}
+procedure main() {{
+    stdoptions.nbmodels = 1
+    printmodels(modelexpand(T, S))
+}}
+"""

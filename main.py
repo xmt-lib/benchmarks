@@ -37,16 +37,15 @@ DIRT_BENCHMARKS = [
 
 def main():
     parser = argparse.ArgumentParser(description="Benchmark Runner CLI")
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
-    group.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
-    group.add_argument("--dirtWrite", action="store_true", help="Generate SMT-LIB benchmark files for DIRT benchmarks")
-    group.add_argument("--asp", action="store_true", help="Run DIRT benchmarks on ASP solver (clingo)")
-    group.add_argument("--idp3", action="store_true", help="Run DIRT benchmarks on IDP3 solver")
-    group.add_argument("--sli", action="store_true", help="Run DIRT benchmarks on SLI solver")
-    group.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
-    group.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
-    group.add_argument("--smt", action="store_true", help="Run found SMT benchmarks")
+    parser.add_argument("--coloring", action="store_true", help="Run coloring benchmarks")
+    parser.add_argument("--dirt", action="store_true", help="Run DIRT benchmarks on SMT solvers")
+    parser.add_argument("--dirtWrite", action="store_true", help="Generate SMT-LIB benchmark files for DIRT benchmarks")
+    parser.add_argument("--asp", action="store_true", help="Run DIRT benchmarks on ASP solver (clingo)")
+    parser.add_argument("--idp3", action="store_true", help="Run DIRT benchmarks on IDP3 solver")
+    parser.add_argument("--sli", action="store_true", help="Run DIRT benchmarks on SLI solver")
+    parser.add_argument("--find", action="store_true", help="Find suitable SMT benchmarks")
+    parser.add_argument("--findQF", action="store_true", help="Find suitable QF SMT benchmarks")
+    parser.add_argument("--smt", action="store_true", help="Run found SMT benchmarks")
 
     args = parser.parse_args()
 
@@ -202,7 +201,7 @@ def main():
             size = 1 if first_param.name == "file_path" else first_param.default
 
             # Execute solver run
-            run_asp(asp_script, benchmark, size, csv="Result_asp.csv")
+            run_asp(asp_script, benchmark, size, csv="Result_dirt.csv")
 
     if args.idp3:
         from src.run import run_idp3
@@ -222,7 +221,7 @@ def main():
 
             # Execute solver runs
             idp3_script = benchmark.idp3()
-            run_idp3(idp3_script, benchmark, size, csv="Result_idp3.csv")
+            run_idp3(idp3_script, benchmark, size, csv="Result_dirt.csv")
 
     if args.sli:
         from src.run import run_sli
@@ -242,7 +241,7 @@ def main():
 
             # Execute solver runs
             sli_script = benchmark.sli()
-            run_sli(sli_script, benchmark, size, csv="Result_sli.csv")
+            run_sli(sli_script, benchmark, size, csv="Result_dirt.csv")
 
     if args.dirtWrite:
         for benchmark in DIRT_BENCHMARKS:

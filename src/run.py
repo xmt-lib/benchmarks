@@ -8,7 +8,7 @@ from datetime import datetime
 
 TIMEOUT = 60  # seconds
 GB = 1024 * 1024 * 1024
-MEMORY_LIMIT = 4 * GB
+MEMORY_LIMIT = 10 * GB
 
 print(subprocess.check_output(["z3", "--version"], text=True))
 
@@ -107,7 +107,7 @@ def run_cvc5(script, benchmark, size, csv):
 def run_asp(script, benchmark, size, csv):
     # clingo reads from stdin. We can optionally specify a time limit in clingo, but
     # run_solver already handles the subprocess timeout.
-    return run_solver("clingo", ["python", "-m", "clingo"], script, benchmark, size, csv)
+    return run_solver("clingo", ["python", "-m", "clingo", "1"], script, benchmark, size, csv)
 
 
 def run_idp3(script, benchmark, size, csv):
@@ -115,9 +115,9 @@ def run_idp3(script, benchmark, size, csv):
     default_idp3 = os.path.abspath(default_idp3)
     if not os.path.exists(default_idp3):
         default_idp3 = "idp"
-    
+
     idp3_exec = os.environ.get("IDP3_EXEC", default_idp3)
-    # IDP3 reads from stdin, but run_solver handles that. 
+    # IDP3 reads from stdin, but run_solver handles that.
     return run_solver("idp3", [idp3_exec], script, benchmark, size, csv, use_temp_file=True)
 
 
@@ -128,6 +128,7 @@ def run_sli(script, benchmark, size, csv):
 
 
 def save_smt_files(script, benchmark):
+    script = script.replace("\n(get-model)", "").replace("(get-model)", "")
     output_dir = os.path.join(
         "..",
         "benchmark-submission",

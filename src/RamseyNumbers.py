@@ -56,6 +56,7 @@ From the DIRT benchmark used to evaluate grounders
                           )))))
 
 (check-sat)
+(get-model)
 (exit)
 """
     return smt

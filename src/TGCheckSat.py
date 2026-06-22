@@ -46,6 +46,7 @@ From the DIRT benchmark used to evaluate grounders
                    (and (edge x y) (edge y z) (edge x z)) )))
 
 (check-sat)
+(get-model)
 (exit)
 """
     return smt

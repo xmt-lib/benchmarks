@@ -50,7 +50,7 @@ def main():
     args = parser.parse_args()
 
     # Default to --smt if no option is selected
-    if not (args.coloring or args.find or args.smt or args.dirt or args.asp or args.idp3 or args.sli):
+    if not (args.coloring or args.find or args.smt or args.dirt or args.asp or args.idp3 or args.sli or args.dirtWrite):
         args.coloring = True
         args.dirt = True
 

@@ -57,14 +57,12 @@ From the DIRT benchmark used to evaluate grounders
   false  ; if empty
 ))
 (declare-fun assign (Int Int Int) Bool)
-(declare-fun assigned (Int) Bool)
 
 (assert (forall ((V Int))
             (=> (Domain V)
-                (= (assigned V)
-                   (exists ((x Int) (y Int))
-                      (and (Domain x) (Domain y)
-                           (assign V x y)))))))
+                (exists ((x Int) (y Int))
+                   (and (Domain x) (Domain y)
+                        (assign V x y))))))
 
 (assert (forall ((V Int) (x1 Int) (x2 Int) (y Int))
             (=> (and (Domain V) (Domain x1) (Domain x2) (Domain y))
@@ -77,10 +75,6 @@ From the DIRT benchmark used to evaluate grounders
 (assert (forall ((s Int) (x Int) (y Int))
             (=> (and (Domain s) (Domain x) (Domain y))
                 (not (and (state x y s) (not (assign s x y)))))))
-
-(assert (forall ((V Int))
-            (=> (Domain V)
-                (not (not (assigned V))))))
 
 (check-sat)
 (get-model)
@@ -99,8 +93,7 @@ nassign(V,X,Y):-v(X,Y),domain(V),not assign(V,X,Y).
 :-assign(V,X,Y1),assign(V,X,Y2),Y1<Y2.
 :-state(X,Y,S), not assign(S,X,Y).
 
-assigned(V):-assign(V,X,Y).
-:-domain(V),not assigned(V).
+:-domain(V), {{ assign(V,X,Y) }} 0.
 """
     return asp_str
 
@@ -116,16 +109,12 @@ def sli(file_path="src/QuasiGroup-d_50-p_60.asp"):
     v: Domain * Domain -> Bool
     state: Domain * Domain * Domain -> Bool
     assign: Domain * Domain * Domain -> Bool
-    assigned: Domain -> Bool
 }}
 theory T: V {{
-    {{
-        !V, x, y in Domain: assigned(V) <- v(x,y) & assign(V, x, y).
-    }}
     !V, x1, x2, y in Domain: ~(v(x1, y) & assign(V, x1, y) & v(x2,y) & assign(V, x2, y) & x1 < x2).
     !V, x, y1, y2 in Domain: ~(v(x,y1) & assign(V, x, y1) & v(x, y2) & assign(V, x, y2) & y1 < y2).
     !s, x, y in Domain: v(x,y) => ~(state(x, y, s) & ~assign(s, x, y)).
-    !V in Domain: assigned(V).
+    !V in Domain: ?x, y in Domain: v(x,y) & assign(V, x, y).
 }}
 structure S: V {{
     v := {{{v_str}}}.
@@ -148,16 +137,12 @@ def idp3(file_path="src/QuasiGroup-d_50-p_60.asp"):
     v(Domain, Domain)
     state(Domain, Domain, Domain)
     assign(Domain, Domain, Domain)
-    assigned(Domain)
 }}
 theory T: V {{
-    {{
-        !V[Domain], x[Domain], y[Domain]: assigned(V) <- v(x,y) & assign(V, x, y).
-    }}
     !V[Domain], x1[Domain], x2[Domain], y[Domain]: ~(v(x1, y) & assign(V, x1, y) & v(x2,y) & assign(V, x2, y) & x1 < x2).
     !V[Domain], x[Domain], y1[Domain], y2[Domain]: ~(v(x,y1) & assign(V, x, y1) & v(x, y2) & assign(V, x, y2) & y1 < y2).
     !s[Domain], x[Domain], y[Domain]: v(x,y) => ~(state(x, y, s) & ~assign(s, x, y)).
-    !V[Domain]: assigned(V).
+    !V[Domain]: ?x[Domain], y[Domain]: v(x,y) & assign(V, x, y).
 }}
 structure S: V {{
     Domain = {{{domain_str}}}

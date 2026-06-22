@@ -33,9 +33,6 @@ def smt(file_path="src/PPM-0045-350-0.asp"):
     for (sq, s) in reversed(t):
         tf_expr = f"(ite (= x {sq}) {s}\n  {tf_expr})"
 
-    p_mapping = '\n  '.join(f"(({x[0]}) {x[1]})" for x in p)
-    t_mapping = '\n  '.join(f"(({x[0]}) {x[1]})" for x in t)
-
     smt = f"""(set-info :smt-lib-version 2.6)
 (set-logic {logic})
 (set-info :source |
@@ -55,41 +52,23 @@ From the DIRT benchmark used to evaluate grounders
 (define-fun number ((x Int)) Bool (<= 1 x {max_number}))
 (define-fun smallnumber ((x Int)) Bool (<= 1 x {patternlength}))
 
-(declare-fun patternlengthf () Int)
 (define-fun pf ((x Int)) Int {pf_expr})
-
-(declare-fun solution (Int) Int)
-(declare-fun solutionindex (Int) Int)
 (define-fun tf ((x Int)) Int {tf_expr})
 
+(declare-fun map (Int) Int)
+
 ; co-domain
-(assert (forall ((x Int)) (=> (smallnumber x) (number (pf x)))))
-(assert (forall ((x Int)) (=> (smallnumber x) (number (solution x)))))
-(assert (forall ((x Int)) (=> (smallnumber x) (number (solutionindex x)))))
-(assert (forall ((x Int)) (=> (number x) (number (tf x)))))
+(assert (forall ((x Int)) (=> (smallnumber x) (number (map x)))))
 
-; ! SN1, SN2 in smallnumber: (~(SN1  <  SN2) | (solutionindex(SN1)  <  solutionindex(SN2)))
-(assert (forall ((SN1 Int) (SN2 Int))
-            (=> (and (smallnumber SN1) (smallnumber SN2))
-                (or (not (< SN1 SN2))
-                    (< (solutionindex SN1) (solutionindex SN2)))
-            )))
+; monotonicity of mapping
+(assert (forall ((x1 Int) (x2 Int))
+            (=> (and (smallnumber x1) (smallnumber x2) (< x1 x2))
+                (< (map x1) (map x2)))))
 
-; ! SN1, N2 in smallnumber: (~(pf(SN1)  <  pf(SN2)) | (solution(SN1)  <  solution(SN2)))
-(assert (forall ((SN1 Int) (SN2 Int))
-            (=> (and (smallnumber SN1) (smallnumber SN2))
-                (or (not (< (pf SN1) (pf SN2)))
-                    (< (solution SN1) (solution SN2)))
-            )))
-
-; ! X in smallnumber, y in number: y = solutionindex(X) => (tf(y)  =  solution(X))
-(assert (forall ((X Int) (y Int))
-            (=> (and (smallnumber X) (smallnumber y))
-                (=> (= y (solutionindex X))
-                    (= (tf y) (solution X))
-                ))))
-
-(assert (= patternlengthf {patternlength}))
+; order preservation (includes equality)
+(assert (forall ((x1 Int) (x2 Int))
+            (=> (and (smallnumber x1) (smallnumber x2) (<= (pf x1) (pf x2)))
+                (<= (tf (map x1)) (tf (map x2))))))
 
 (check-sat)
 (get-model)
@@ -135,8 +114,8 @@ def sli(file_path="src/PPM-0045-350-0.asp"):
 theory T: V {{
     // Monotonic mapping
     !x1, x2 in P: x1 < x2 => map(x1) < map(x2).
-    // Colors must match
-    !x in P: p_color(x) = t_color(map(x)).
+    // Order-preserving colors
+    !x1, x2 in P: p_color(x1) =< p_color(x2) => t_color(map(x1)) =< t_color(map(x2)).
 }}
 structure S: V {{
     p_color := {{{p_str}}}.
@@ -168,8 +147,8 @@ def idp3(file_path="src/PPM-0045-350-0.asp"):
 theory T: V {{
     // Monotonic mapping
     !x1[P], x2[P]: x1 < x2 => map(x1) < map(x2).
-    // Colors must match
-    !x[P]: p_color(x) = t_color(map(x)).
+    // Order-preserving colors
+    !x1[P], x2[P]: p_color(x1) =< p_color(x2) => t_color(map(x1)) =< t_color(map(x2)).
 }}
 structure S: V {{
     T = {{{t_str}}}

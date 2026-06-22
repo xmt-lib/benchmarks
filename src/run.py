@@ -87,7 +87,7 @@ def run_solver(solver_name, cmd, script, benchmark, size, csv_path, use_temp_fil
         writer = csv.writer(csvfile)
         if not file_exists:
             writer.writerow(['name', 'size', 'solver', 'solve time', 'error', 'run date'])
-        solve_time = 300 if error else end_time
+        solve_time = TIMEOUT if error else end_time
         writer.writerow([benchmark.name, size, solver_name, solve_time, error or "", datetime.now().isoformat()])
     return error == ""
 
@@ -101,7 +101,7 @@ def run_z3(script, benchmark, size, csv):
 
 
 def run_cvc5(script, benchmark, size, csv):
-    return run_solver("cvc5", ["cvc5", "--lang=smt2"], script, benchmark, size, csv)
+    return run_solver("cvc5", ["cvc5", "--lang=smt2", "--produce-models"], script, benchmark, size, csv)
 
 
 def run_asp(script, benchmark, size, csv):

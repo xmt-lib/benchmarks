@@ -84,7 +84,7 @@ vocabulary V {{
     q: Domain -> Bool
 }}
 theory T: V {{
-    ?x in Domain: p(x) & ~q(x).
+    !x in Domain: p(x) | q(x).
 }}
 structure S: V {{
     p := {{{ps_str}}}.
@@ -109,7 +109,7 @@ vocabulary V {{
     q(Domain)
 }}
 theory T: V {{
-    ?x[Domain]: p(x) & ~q(x).
+    !x[Domain]: p(x) | q(x).
 }}
 structure S: V {{
     Domain = {{{elems_str}}}

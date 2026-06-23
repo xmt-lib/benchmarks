@@ -2,7 +2,7 @@ import argparse
 import inspect
 import random
 random.seed(0)
-from src.run import run_z3, run_cvc5, run_xmt, TIMEOUT, save_smt_files
+from src.run import run_z3, run_cvc5, run_xmt, run_xmt_cvc5, run_ultimate_eliminator, TIMEOUT, save_smt_files
 import src.CommonItems
 import src.CompleteSets
 import src.GraphColoring.GraphColoring
@@ -63,16 +63,25 @@ def main():
             src.GraphColoring.grounded,
         ]
 
-        solvers = [run_z3, run_xmt, run_cvc5]  #
+        solvers = [run_z3, run_xmt, run_cvc5, run_ultimate_eliminator]  #
         for solver in solvers:
-            solver_benchmarks = benchmarks.copy()
-            if solver == run_z3:
-                solver_benchmarks.extend([
-                    src.GraphColoring.int_define_no_eq,
-                    src.GraphColoring.datatype_define_no_eq,
-                    src.GraphColoring.int_assert_no_eq,
-                    src.GraphColoring.datatype_assert_no_eq,
-                ])
+            if solver == run_ultimate_eliminator:
+                solver_benchmarks = [
+                    src.GraphColoring.ue_GraphColoring,
+                    src.GraphColoring.ue_int_assert,
+                    src.GraphColoring.ue_grounded,
+                    src.GraphColoring.ue_int_define_no_eq,
+                    src.GraphColoring.ue_int_assert_no_eq,
+                ]
+            else:
+                solver_benchmarks = benchmarks.copy()
+                if solver == run_z3:
+                    solver_benchmarks.extend([
+                        src.GraphColoring.int_define_no_eq,
+                        src.GraphColoring.datatype_define_no_eq,
+                        src.GraphColoring.int_assert_no_eq,
+                        src.GraphColoring.datatype_assert_no_eq,
+                    ])
             for benchmark in solver_benchmarks:
                 size = 50
                 while size <= 3000:
@@ -85,7 +94,7 @@ def main():
                     smt = benchmark.smt(size)
 
                     # Execute solver run
-                    success = solver(smt, benchmark, size, csv="coloring.csv")
+                    success = solver(smt, benchmark, size, csv="Result_coloring.csv")
 
                     if not success:
                         print(f"Solver {solver_name} timed out for {benchmark.name} at size {size}. Stopping size loop.")
@@ -186,7 +195,7 @@ def main():
             run_z3(smt, benchmark, size, csv="Result_dirt.csv")
             run_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
             run_xmt(smt, benchmark, size, csv="Result_dirt.csv")
-
+            run_xmt_cvc5(smt, benchmark, size, csv="Result_dirt.csv")
     if args.asp:
         from src.run import run_asp
         for benchmark in DIRT_BENCHMARKS:
@@ -274,6 +283,8 @@ def plot_coloring_results(csv_path="Result_coloring.csv", output_path="Result_co
                 name = row["name"]
                 size = int(row["size"])
                 solver = row["solver"]
+                if solver == "ultimate_eliminator" or name.startswith("ue_"):
+                    continue
                 error = row.get("error", "").strip()
                 if error:
                     solve_time = float(TIMEOUT)

@@ -1,82 +1,92 @@
 name,size,solver,solve time,error,run date
-CommonItems,200000,z3,60,Time out,2026-06-23T12:01:52.598248
-CommonItems,200000,cvc5,60,Time out,2026-06-23T12:02:52.997405
-CommonItems,200000,xmt,0.6263,,2026-06-23T12:02:53.623891
-CompleteSets,200000,z3,60,Time out,2026-06-23T12:03:53.812907
-CompleteSets,200000,cvc5,60,Time out,2026-06-23T12:04:54.103714
-CompleteSets,200000,xmt,2.7233,,2026-06-23T12:04:56.827233
-GraphColoring,2500,z3,60,Time out,2026-06-23T12:05:57.251281
-GraphColoring,2500,cvc5,60,Time out,2026-06-23T12:06:57.273106
-GraphColoring,2500,xmt,0.6698,,2026-06-23T12:06:57.943105
-N_queens,37,z3,4.4146,,2026-06-23T12:07:02.358130
+CommonItems,200000,z3,60,Time out,2026-06-23T13:22:47.732769
+CommonItems,200000,cvc5,60,Time out,2026-06-23T13:23:48.118995
+CommonItems,200000,xmt,0.6349,,2026-06-23T13:23:48.754101
+CommonItems,200000,xmt_cvc5,0.6182,,2026-06-23T13:23:49.373621
+CompleteSets,200000,z3,60,Time out,2026-06-23T13:24:49.613064
+CompleteSets,200000,cvc5,60,Time out,2026-06-23T13:25:49.892500
+CompleteSets,200000,xmt,2.7100,,2026-06-23T13:25:52.602611
+CompleteSets,200000,xmt_cvc5,2.2146,,2026-06-23T13:25:54.818966
+GraphColoring,2500,z3,60,Time out,2026-06-23T13:26:55.239678
+GraphColoring,2500,cvc5,60,Time out,2026-06-23T13:27:55.317238
+GraphColoring,2500,xmt,0.6820,,2026-06-23T13:27:55.999386
+GraphColoring,2500,xmt_cvc5,1.2661,,2026-06-23T13:27:57.266480
+N_queens,37,z3,4.3634,,2026-06-23T13:28:01.630299
 N_queens,37,cvc5,60,"Incorrect: unknown
 (
 (define-fun queen ((_arg_1 Int)) Int 0)
 )
-",2026-06-23T12:07:02.373022
-N_queens,37,xmt,0.8645,,2026-06-23T12:07:03.237731
-NonPartitionRemovalColoring,1,z3,60,Time out,2026-06-23T12:08:03.313142
-NonPartitionRemovalColoring,1,cvc5,60,Time out,2026-06-23T12:09:03.747775
-NonPartitionRemovalColoring,1,xmt,8.1573,,2026-06-23T12:09:11.905243
-PackingProblem,1,z3,60,Time out,2026-06-23T12:10:11.983834
+",2026-06-23T13:28:01.645126
+N_queens,37,xmt,0.8569,,2026-06-23T13:28:02.502149
+N_queens,37,xmt_cvc5,60,Time out,2026-06-23T13:29:02.566548
+NonPartitionRemovalColoring,1,z3,60,Time out,2026-06-23T13:30:02.702529
+NonPartitionRemovalColoring,1,cvc5,60,Time out,2026-06-23T13:31:03.112440
+NonPartitionRemovalColoring,1,xmt,8.5030,,2026-06-23T13:31:11.615630
+NonPartitionRemovalColoring,1,xmt_cvc5,60,Time out,2026-06-23T13:32:11.691655
+PackingProblem,1,z3,60,Time out,2026-06-23T13:33:11.748214
 PackingProblem,1,cvc5,60,"Incorrect: unknown
 (
 (define-fun pos_x ((_arg_1 Square)) Int 0)
 (define-fun pos_y ((_arg_1 Square)) Int 0)
 )
-",2026-06-23T12:10:12.010221
-PackingProblem,1,xmt,1.8984,,2026-06-23T12:10:13.908745
-PPM,1,z3,60,Time out,2026-06-23T12:11:13.983679
+",2026-06-23T13:33:11.763426
+PackingProblem,1,xmt,2.0438,,2026-06-23T13:33:13.807372
+PackingProblem,1,xmt_cvc5,60,Time out,2026-06-23T13:34:13.872003
+PPM,1,z3,60,Time out,2026-06-23T13:35:13.958845
 PPM,1,cvc5,60,"Incorrect: unknown
 (
 (define-fun map ((_arg_1 Int)) Int 0)
 )
-",2026-06-23T12:11:14.026026
-PPM,1,xmt,60,Time out,2026-06-23T12:12:14.081184
-QuasiGroup,1,z3,60,Time out,2026-06-23T12:13:14.153016
+",2026-06-23T13:35:13.999698
+PPM,1,xmt,60,Time out,2026-06-23T13:36:14.106261
+PPM,1,xmt_cvc5,60,Time out,2026-06-23T13:37:14.173021
+QuasiGroup,1,z3,60,Time out,2026-06-23T13:38:14.241397
 QuasiGroup,1,cvc5,60,"Incorrect: unknown
 (
 (define-fun assign ((_arg_1 Int) (_arg_2 Int) (_arg_3 Int)) Bool false)
 )
-",2026-06-23T12:13:14.185214
-QuasiGroup,1,xmt,60,Time out,2026-06-23T12:14:14.388281
-RamseyNumbers,21,z3,4.3749,,2026-06-23T12:14:18.763559
+",2026-06-23T13:38:14.276834
+QuasiGroup,1,xmt,60,Time out,2026-06-23T13:39:14.598461
+QuasiGroup,1,xmt_cvc5,60,Time out,2026-06-23T13:40:14.748408
+RamseyNumbers,21,z3,5.1405,,2026-06-23T13:40:19.889424
 RamseyNumbers,21,cvc5,60,"Incorrect: unknown
 (
 (define-fun edge ((_arg_1 Int) (_arg_2 Int)) Bool false)
 )
-",2026-06-23T12:14:18.770807
-RamseyNumbers,21,xmt,0.9489,,2026-06-23T12:14:19.719907
-TGCheckSat,250,z3,25.4818,,2026-06-23T12:14:45.202393
-TGCheckSat,250,cvc5,2.4275,,2026-06-23T12:14:47.630059
-TGCheckSat,250,xmt,0.0288,,2026-06-23T12:14:47.659145
-CommonItems,200000,clingo,6.1953,,2026-06-23T12:14:53.942256
-CompleteSets,200000,clingo,2.8780,,2026-06-23T12:14:56.925965
-GraphColoring,2500,clingo,9.3495,,2026-06-23T12:15:06.364922
-N_queens,37,clingo,0.9019,,2026-06-23T12:15:07.267177
-NonPartitionRemovalColoring,1,clingo,1.2819,,2026-06-23T12:15:08.551292
-PackingProblem,1,clingo,60,Time out,2026-06-23T12:16:08.681496
-PPM,1,clingo,60,Time out,2026-06-23T12:17:09.051569
-QuasiGroup,1,clingo,10.4183,,2026-06-23T12:17:19.471957
-RamseyNumbers,21,clingo,0.1610,,2026-06-23T12:17:19.633246
-TGCheckSat,250,clingo,0.0600,,2026-06-23T12:17:19.693876
-CommonItems,200000,idp3,0.7315,,2026-06-23T12:17:20.513095
-CompleteSets,200000,idp3,2.4970,,2026-06-23T12:17:23.114361
-GraphColoring,2500,idp3,2.6989,,2026-06-23T12:17:25.876398
-N_queens,37,idp3,0.4794,,2026-06-23T12:17:26.356293
-NonPartitionRemovalColoring,1,idp3,2.0207,,2026-06-23T12:17:28.382321
-PackingProblem,1,idp3,0.3083,,2026-06-23T12:17:28.691178
-PPM,1,idp3,60,Time out,2026-06-23T12:18:29.085880
-QuasiGroup,1,idp3,15.0096,,2026-06-23T12:18:44.098253
-RamseyNumbers,21,idp3,0.3064,,2026-06-23T12:18:44.405179
-TGCheckSat,250,idp3,0.1810,,2026-06-23T12:18:44.587016
-CommonItems,200000,sli,1.1426,,2026-06-23T12:18:45.822064
-CompleteSets,200000,sli,1.2671,,2026-06-23T12:18:47.195878
-GraphColoring,2500,sli,0.5451,,2026-06-23T12:18:47.802899
-N_queens,37,sli,2.7239,,2026-06-23T12:18:50.527183
-NonPartitionRemovalColoring,1,sli,5.2958,,2026-06-23T12:18:55.826325
-PackingProblem,1,sli,13.9973,,2026-06-23T12:19:09.824188
-PPM,1,sli,60,Time out,2026-06-23T12:20:10.160547
-QuasiGroup,1,sli,60,Time out,2026-06-23T12:21:10.394653
-RamseyNumbers,21,sli,0.8385,,2026-06-23T12:21:11.233549
-TGCheckSat,250,sli,0.1029,,2026-06-23T12:21:11.337358
+",2026-06-23T13:40:19.897507
+RamseyNumbers,21,xmt,1.1284,,2026-06-23T13:40:21.026103
+RamseyNumbers,21,xmt_cvc5,2.7225,,2026-06-23T13:40:23.748787
+TGCheckSat,250,z3,31.2728,,2026-06-23T13:40:55.022465
+TGCheckSat,250,cvc5,3.4473,,2026-06-23T13:40:58.469950
+TGCheckSat,250,xmt,0.0300,,2026-06-23T13:40:58.500163
+TGCheckSat,250,xmt_cvc5,0.0375,,2026-06-23T13:40:58.537882
+CommonItems,200000,clingo,6.7320,,2026-06-23T13:41:05.372796
+CompleteSets,200000,clingo,2.9274,,2026-06-23T13:41:08.411637
+GraphColoring,2500,clingo,11.0957,,2026-06-23T13:41:19.589500
+N_queens,37,clingo,1.1023,,2026-06-23T13:41:20.692123
+NonPartitionRemovalColoring,1,clingo,1.4853,,2026-06-23T13:41:22.179875
+PackingProblem,1,clingo,60,Time out,2026-06-23T13:42:22.331289
+PPM,1,clingo,60,Time out,2026-06-23T13:43:22.749767
+QuasiGroup,1,clingo,12.7674,,2026-06-23T13:43:35.519582
+RamseyNumbers,21,clingo,0.1711,,2026-06-23T13:43:35.691038
+TGCheckSat,250,clingo,0.0684,,2026-06-23T13:43:35.760129
+CommonItems,200000,idp3,0.7028,,2026-06-23T13:43:36.558344
+CompleteSets,200000,idp3,2.5635,,2026-06-23T13:43:39.235366
+GraphColoring,2500,idp3,3.3961,,2026-06-23T13:43:42.700963
+N_queens,37,idp3,0.5790,,2026-06-23T13:43:43.280429
+NonPartitionRemovalColoring,1,idp3,2.6025,,2026-06-23T13:43:45.886278
+PackingProblem,1,idp3,0.3907,,2026-06-23T13:43:46.277602
+PPM,1,idp3,60,Time out,2026-06-23T13:44:46.655531
+QuasiGroup,1,idp3,19.0142,,2026-06-23T13:45:05.672449
+RamseyNumbers,21,idp3,0.3876,,2026-06-23T13:45:06.060547
+TGCheckSat,250,idp3,0.1788,,2026-06-23T13:45:06.240104
+CommonItems,200000,sli,1.3529,,2026-06-23T13:45:07.759476
+CompleteSets,200000,sli,1.4068,,2026-06-23T13:45:09.302752
+GraphColoring,2500,sli,0.6253,,2026-06-23T13:45:10.003174
+N_queens,37,sli,3.7056,,2026-06-23T13:45:13.709130
+NonPartitionRemovalColoring,1,sli,6.5712,,2026-06-23T13:45:20.283563
+PackingProblem,1,sli,16.8738,,2026-06-23T13:45:37.157960
+PPM,1,sli,60,Time out,2026-06-23T13:46:37.662461
+QuasiGroup,1,sli,60,Time out,2026-06-23T13:47:37.932005
+RamseyNumbers,21,sli,0.9510,,2026-06-23T13:47:38.883430
+TGCheckSat,250,sli,0.1119,,2026-06-23T13:47:38.996088

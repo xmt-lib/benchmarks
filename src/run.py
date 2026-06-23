@@ -96,6 +96,13 @@ def run_xmt(script, benchmark, size, csv):
     return run_solver("xmt", ["../xmtcom/target/release/xmt-lib"], script, benchmark, size, csv, use_temp_file=True)
 
 
+def run_xmt_cvc5(script, benchmark, size, csv):
+    script_cvc5 = "(set-option :backend cvc5)\n" + script
+    return run_solver("xmt_cvc5", ["../xmtcom/target/release/xmt-lib"], script_cvc5, benchmark, size, csv, use_temp_file=True)
+
+def run_ultimate_eliminator(script, benchmark, size, csv):
+    return run_solver("ultimate_eliminator", ["../UltimateEliminator/run_ue_z3.sh"], script, benchmark, size, csv, use_temp_file=True)
+
 def run_z3(script, benchmark, size, csv):
     return run_solver("z3", ["/usr/bin/z3", "-in"], script, benchmark, size, csv)
 

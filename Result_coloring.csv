@@ -289,3 +289,412 @@ grounded,1556,cvc5,0.2936,,2026-05-21T10:50:54.210335
 grounded,1867,cvc5,0.4080,,2026-05-21T10:50:55.183241
 grounded,2240,cvc5,0.5729,,2026-05-21T10:50:56.346824
 grounded,2688,cvc5,0.7978,,2026-05-21T10:50:57.766751
+GraphColoring,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpgphwx0by:45:13: line 24 column 27: Invalid function declaration: unknown sort 'Color'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:06:56.259331
+datatype_define,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmphov_xyrq:19:12: line 22 column 21: invalid sorted variables: unknown sort 'Node'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:06:57.449559
+int_assert,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpdsrw2g2q:19:13: line 24 column 27: Invalid function declaration: unknown sort 'Color'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:06:58.729294
+datatype_assert,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmprh68qkor:19:13: line 22 column 19: Parsing function declaration. Expecting sort list '(': unknown sort 'Node'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:00.009098
+grounded,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpggc6io8d:18:13: line 22 column 27: Invalid function declaration: unknown sort 'Color'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:01.231122
+int_define_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpicgob5xr:48:13: line 28 column 27: Invalid function declaration: unknown sort 'Color'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:02.488261
+datatype_define_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpnpj2o_w1:22:12: line 26 column 21: invalid sorted variables: unknown sort 'Node'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:03.804673
+int_assert_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmpxpvoauj2:22:13: line 28 column 27: Invalid function declaration: unknown sort 'Color'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:05.020069
+datatype_assert_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: de.uni_freiburg.informatik.ultimate.logic.SMTLIBException: /tmp/tmp1hf_rjmd:22:13: line 26 column 19: Parsing function declaration. Expecting sort list '(': unknown sort 'Node'
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingParseEnvironment.printError(ExceptionThrowingParseEnvironment.java:52)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:56)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:07:06.240204
+ue_GraphColoring,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+java.lang.AssertionError: Result of partial quantifier elimination is not quantifier-free but an A term.
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.makeQuantifierFree(UltimateEliminator.java:182)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.assertTerm(UltimateEliminator.java:158)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser$Action$.CUP$do_action(Parser.java:2886)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser.do_action(Parser.java:1333)
+	com.github.jhoenicke.javacup.runtime.LRParser.parse(LRParser.java:383)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseStream(ParseEnvironment.java:120)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseScript(ParseEnvironment.java:99)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:54)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:16:22.514139
+ue_int_assert,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+java.lang.AssertionError: Result of partial quantifier elimination is not quantifier-free but an A term.
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.makeQuantifierFree(UltimateEliminator.java:182)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.assertTerm(UltimateEliminator.java:158)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser$Action$.CUP$do_action(Parser.java:2886)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser.do_action(Parser.java:1333)
+	com.github.jhoenicke.javacup.runtime.LRParser.parse(LRParser.java:383)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseStream(ParseEnvironment.java:120)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseScript(ParseEnvironment.java:99)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:54)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:16:23.762875
+ue_grounded,50,ultimate_eliminator,1.6247,,2026-06-24T13:16:25.388012
+ue_grounded,60,ultimate_eliminator,1.8545,,2026-06-24T13:16:28.394167
+ue_grounded,72,ultimate_eliminator,1.7908,,2026-06-24T13:16:30.742679
+ue_grounded,86,ultimate_eliminator,1.8442,,2026-06-24T13:16:33.104730
+ue_grounded,103,ultimate_eliminator,1.9183,,2026-06-24T13:16:35.610360
+ue_grounded,123,ultimate_eliminator,1.9849,,2026-06-24T13:16:38.121066
+ue_grounded,147,ultimate_eliminator,2.3444,,2026-06-24T13:16:41.029550
+ue_grounded,176,ultimate_eliminator,2.3371,,2026-06-24T13:16:43.936957
+ue_grounded,211,ultimate_eliminator,3.0153,,2026-06-24T13:16:47.545219
+ue_grounded,253,ultimate_eliminator,2.8459,,2026-06-24T13:16:50.935958
+ue_grounded,303,ultimate_eliminator,6.0990,,2026-06-24T13:16:57.571810
+ue_grounded,363,ultimate_eliminator,4.2594,,2026-06-24T13:17:02.453547
+ue_grounded,435,ultimate_eliminator,7.3856,,2026-06-24T13:17:10.372655
+ue_grounded,522,ultimate_eliminator,4.3153,,2026-06-24T13:17:15.247076
+ue_grounded,626,ultimate_eliminator,4.9751,,2026-06-24T13:17:20.866475
+ue_grounded,751,ultimate_eliminator,6.0504,,2026-06-24T13:17:27.569968
+ue_grounded,901,ultimate_eliminator,9.6151,,2026-06-24T13:17:37.823405
+ue_grounded,1081,ultimate_eliminator,19.2867,,2026-06-24T13:17:57.825036
+ue_grounded,1297,ultimate_eliminator,11.5143,,2026-06-24T13:18:10.056733
+ue_grounded,1556,ultimate_eliminator,47.4440,,2026-06-24T13:18:58.109695
+ue_grounded,1867,ultimate_eliminator,28.4853,,2026-06-24T13:19:27.260544
+ue_grounded,2240,ultimate_eliminator,31.7434,,2026-06-24T13:19:59.714620
+ue_grounded,2688,ultimate_eliminator,63.9438,,2026-06-24T13:21:04.477695
+ue_int_define_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+java.lang.AssertionError: Result of partial quantifier elimination is not quantifier-free but an A term.
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.makeQuantifierFree(UltimateEliminator.java:182)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.assertTerm(UltimateEliminator.java:158)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser$Action$.CUP$do_action(Parser.java:2886)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser.do_action(Parser.java:1333)
+	com.github.jhoenicke.javacup.runtime.LRParser.parse(LRParser.java:383)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseStream(ParseEnvironment.java:120)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseScript(ParseEnvironment.java:99)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:54)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:21:06.388926
+ue_int_assert_no_eq,50,ultimate_eliminator,60,"Incorrect: success
+success
+success
+success
+success
+success
+success
+success
+success
+success
+java.lang.AssertionError: Result of partial quantifier elimination is not quantifier-free but an A term.
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.makeQuantifierFree(UltimateEliminator.java:182)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.UltimateEliminator.assertTerm(UltimateEliminator.java:158)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser$Action$.CUP$do_action(Parser.java:2886)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.Parser.do_action(Parser.java:1333)
+	com.github.jhoenicke.javacup.runtime.LRParser.parse(LRParser.java:383)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseStream(ParseEnvironment.java:120)
+	de.uni_freiburg.informatik.ultimate.smtinterpol.smtlib2.ParseEnvironment.parseScript(ParseEnvironment.java:99)
+	de.uni_freiburg.informatik.ultimate.lib.modelcheckerutils.smt.ExceptionThrowingSMTLIB2Parser.run(ExceptionThrowingSMTLIB2Parser.java:54)
+	de.uni_freiburg.informatik.ultimate.controller.eliminator.UltimateEliminatorController.init(UltimateEliminatorController.java:220)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.activateController(UltimateCore.java:243)
+	de.uni_freiburg.informatik.ultimate.core.coreplugin.UltimateCore.start(UltimateCore.java:185)
+	org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:627)
+	org.eclipse.equinox.launcher.Main.basicRun(Main.java:575)
+	org.eclipse.equinox.launcher.Main.run(Main.java:1431)
+	org.eclipse.equinox.launcher.Main.main(Main.java:1403)
+
+",2026-06-24T13:21:07.727310

@@ -145,6 +145,7 @@ def save_smt_files(script, benchmark):
     print(f"Saved SMT script to: {path}")
 
     # to xmt-lib benchmarks
+    script = script.replace("\n(exit)", "").replace("(exit)", "")
     output_dir = os.path.join(
         "..",
         "xmtcom",
